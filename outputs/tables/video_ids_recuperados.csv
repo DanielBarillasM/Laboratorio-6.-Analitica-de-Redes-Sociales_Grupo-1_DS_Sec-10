@@ -1,0 +1,4 @@
+﻿row_index,video_url,video_id_recuperado,metodo
+1,https://www.youtube.com/watch?v=-E7OPOLjMug,-E7OPOLjMug,parámetro v de video_url
+2,https://www.youtube.com/watch?v=-KDglrIzRKo,-KDglrIzRKo,parámetro v de video_url
+3,https://www.youtube.com/watch?v=-O4Pa7qS9WQ,-O4Pa7qS9WQ,parámetro v de video_url

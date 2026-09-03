@@ -1,0 +1,95 @@
+{
+  "files": {
+    "videos": "youtube_videos_12808423.csv",
+    "comments": "youtube_comments_12808422.xlsx"
+  },
+  "formats": {
+    "videos": "excel",
+    "comments": "excel"
+  },
+  "counts": {
+    "videos": 293,
+    "channels": 97,
+    "comments": 406,
+    "authors": 332,
+    "videos_with_comments": 19,
+    "repaired_video_ids": 3
+  },
+  "integration_pct": 100.0,
+  "top_video": {
+    "title": "Qué rico come tu diputado",
+    "comments": 161
+  },
+  "top_channel": {
+    "name": "Quorum",
+    "comments": 256
+  },
+  "top5_video_share": 75.36945812807882,
+  "spearman_all": 0.08032343882513514,
+  "networks": [
+    {
+      "red": "bipartita_autor_video",
+      "nodos": 625,
+      "aristas": 343,
+      "nodos_activos": 351,
+      "nodos_aislados": 274,
+      "densidad": 0.0017589743589743589,
+      "grado_medio": 1.0976,
+      "grado_mediano": 1.0,
+      "grado_maximo": 128,
+      "componentes": 284,
+      "componente_mayor": 286,
+      "componente_mayor_pct": 45.76,
+      "transitividad": 0.0,
+      "clustering_medio": 0.0,
+      "cohesion_nodos_lcc": 1,
+      "cohesion_aristas_lcc": 1,
+      "diametro_lcc": 12
+    },
+    {
+      "red": "proyeccion_autores",
+      "nodos": 332,
+      "aristas": 10732,
+      "nodos_activos": 328,
+      "nodos_aislados": 4,
+      "densidad": 0.19531904051250318,
+      "grado_medio": 64.65060240963855,
+      "grado_mediano": 48.0,
+      "grado_maximo": 183,
+      "componentes": 10,
+      "componente_mayor": 276,
+      "componente_mayor_pct": 83.13253012048193,
+      "transitividad": 0.9840254741148836,
+      "clustering_medio": 0.4862404883498666,
+      "cohesion_nodos_lcc": 1,
+      "cohesion_aristas_lcc": 5,
+      "diametro_lcc": 6
+    },
+    {
+      "red": "proyeccion_videos",
+      "nodos": 293,
+      "aristas": 11,
+      "nodos_activos": 10,
+      "nodos_aislados": 283,
+      "densidad": 0.0002571415213427463,
+      "grado_medio": 0.07508532423208192,
+      "grado_mediano": 0.0,
+      "grado_maximo": 4,
+      "componentes": 284,
+      "componente_mayor": 10,
+      "componente_mayor_pct": 3.4129692832764507,
+      "transitividad": 0.3157894736842105,
+      "clustering_medio": 0.006091768443746542,
+      "cohesion_nodos_lcc": 1,
+      "cohesion_aristas_lcc": 1,
+      "diametro_lcc": 5
+    }
+  ],
+  "communities": {
+    "algorithm": "Louvain ponderado",
+    "count": 10,
+    "modularity": 0.3949028012418394
+  },
+  "scope_points": 74,
+  "scope_total": 100
+}

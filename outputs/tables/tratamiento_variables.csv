@@ -1,0 +1,9 @@
+﻿variable,tratamiento,justificacion
+viewer_rating,Excluir,100 % faltante; no aporta información.
+is_pinned,"Conservar para auditoría, no modelar",Es constante (False).
+published_time/published_text,Describir con cautela,Tiempo relativo dependiente de la fecha de recolección.
+reply_count,Conteo descriptivo,No identifica autores de respuestas y no genera aristas.
+source_query,Variable de muestreo,"Explica recolección, no necesariamente el tema definitivo."
+nombres/handles,Solo etiquetas,Los nodos se identifican mediante IDs estables.
+lematización,No aplicada en el avance,Sin un modelo morfosintáctico español validado puede deformar nombres y términos; se evalúa para la fase final.
+emojis,"Retirados de texto_limpio, conservados en texto_original",Se preservan para sentimiento en la fase final.

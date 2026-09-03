@@ -1,0 +1,33 @@
+﻿dataset,metrica,valor
+videos_original,filas,293
+videos_original,columnas,20
+videos_original,celdas_faltantes,94
+videos_original,filas_duplicadas,0
+videos_original,video_id_faltantes,3
+videos_original,video_id_duplicados,2
+videos_original,variables_constantes,ninguna
+videos_original,atipicos_iqr,view_count:49
+comments_original,filas,406
+comments_original,columnas,17
+comments_original,celdas_faltantes,406
+comments_original,filas_duplicadas,0
+comments_original,comment_id_faltantes,0
+comments_original,comment_id_duplicados,0
+comments_original,variables_constantes,"is_pinned, viewer_rating"
+comments_original,atipicos_iqr,reply_count:30
+videos_normalizado,filas,293
+videos_normalizado,columnas,20
+videos_normalizado,celdas_faltantes,91
+videos_normalizado,filas_duplicadas,0
+videos_normalizado,video_id_faltantes,0
+videos_normalizado,video_id_duplicados,0
+videos_normalizado,variables_constantes,ninguna
+videos_normalizado,atipicos_iqr,view_count:49
+comments_normalizado,filas,406
+comments_normalizado,columnas,20
+comments_normalizado,celdas_faltantes,406
+comments_normalizado,filas_duplicadas,0
+comments_normalizado,comment_id_faltantes,0
+comments_normalizado,comment_id_duplicados,0
+comments_normalizado,variables_constantes,"is_pinned, viewer_rating"
+comments_normalizado,atipicos_iqr,reply_count:30; like_count:48

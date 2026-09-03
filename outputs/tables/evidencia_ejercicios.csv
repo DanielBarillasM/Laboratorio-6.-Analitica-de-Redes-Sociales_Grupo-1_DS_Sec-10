@@ -1,0 +1,11 @@
+﻿ejercicio,estado,evidencia
+1,completo,formatos_detectados.csv; integracion_resumen.csv; video_ids_recuperados.csv
+2,completo,calidad_resumen.csv; calidad_variables.csv; auditoria_limpieza_texto.csv; tratamiento_variables.csv
+3,completo,participacion_por_video.csv; participacion_por_canal.csv; frecuencias_contenido.png; preguntas_obligatorias.csv; preguntas_adicionales.csv
+4,completo,nodos_bipartita.csv; aristas_bipartita.csv; red_bipartita_completa.png
+5,completo,aristas_autores.csv; aristas_videos.csv; proyeccion_autores.png; proyeccion_videos.png
+6,completo,metricas_redes.csv; distribuciones_grado.csv; componentes_redes.csv; nodos_perifericos_y_aislados.csv
+7,parcial avanzado,membresia_comunidades.csv; resumen_comunidades.csv; comunidades_autores.png; sentimiento pendiente
+8,fase final,"centralidades, puentes y remoción pendientes"
+9,fase final,sentimiento validado para español pendiente
+10,fase final,síntesis y conclusiones definitivas pendientes

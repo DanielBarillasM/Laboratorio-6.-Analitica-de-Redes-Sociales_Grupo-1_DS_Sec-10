@@ -1,0 +1,4 @@
+﻿red,nodos,aristas,nodos_activos,nodos_aislados,densidad,grado_medio,grado_mediano,grado_maximo,componentes,componente_mayor,componente_mayor_pct,transitividad,clustering_medio,cohesion_nodos_lcc,cohesion_aristas_lcc,diametro_lcc
+bipartita_autor_video,625,343,351,274,0.0017589743589743589,1.0976,1.0,128,284,286,45.76,0.0,0.0,1,1,12
+proyeccion_autores,332,10732,328,4,0.19531904051250318,64.65060240963855,48.0,183,10,276,83.13253012048193,0.9840254741148836,0.4862404883498666,1,5,6
+proyeccion_videos,293,11,10,283,0.0002571415213427463,0.07508532423208192,0.0,4,284,10,3.4129692832764507,0.3157894736842105,0.006091768443746542,1,1,5

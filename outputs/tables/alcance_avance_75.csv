@@ -1,0 +1,10 @@
+﻿criterio,puntos_rubrica,puntos_cubiertos,estado
+"Calidad, limpieza y preprocesamiento",18,18,completo
+Análisis exploratorio,18,18,completo
+Red bipartita autor-video,10,10,completo
+Proyecciones,8,8,completo
+Topología y fragmentación,12,12,completo
+Comunidades,10,8,parcial: falta sentimiento
+Nodos centrales y participantes puente,7,0,fase final
+Contenido y sentimiento,5,0,fase final
+"Interpretación, limitaciones y conclusiones finales",12,0,fase final; hay discusión preliminar

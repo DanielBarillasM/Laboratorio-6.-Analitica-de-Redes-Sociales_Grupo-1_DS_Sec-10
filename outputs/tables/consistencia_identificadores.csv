@@ -1,0 +1,8 @@
+﻿verificacion,inconsistencias
+videos: channel_id identifica un solo channel_name,0
+videos: channel_id identifica un solo channel_handle,0
+videos: owner_handle coincide con channel_handle,0
+videos: upload_date coincide con publish_date,0
+comentarios sin video asociado,0
+comentarios con channel_id inconsistente,0
+comentarios con título inconsistente,0

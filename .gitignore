@@ -216,3 +216,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Artefactos locales y temporales del Laboratorio 6
+data/processed/*.csv
+!data/processed/.gitkeep
+reports/*.aux
+reports/*.log
+reports/*.out
+reports/*.toc
+reports/*.synctex.gz
+reports/*.fls
+reports/*.fdb_latexmk
+.venv/
+.pytest_cache/

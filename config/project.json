@@ -1,0 +1,16 @@
+{
+  "universidad": "Universidad del Valle de Guatemala",
+  "curso": "CC3084 - Data Science",
+  "seccion": "10",
+  "semestre": "Segundo semestre 2026",
+  "laboratorio": "Laboratorio 6 - Analítica de Redes Sociales",
+  "grupo": "Grupo 1",
+  "integrantes": [
+    {"nombre": "Jorge Gabriel Palacios Sales", "carne": "231385"},
+    {"nombre": "Pablo Daniel Barillas Moreno", "carne": "22193"},
+    {"nombre": "Roberto Emiliano Otoniel", "carne": "23968"}
+  ],
+  "avance": 75,
+  "semilla": 42
+}
+
