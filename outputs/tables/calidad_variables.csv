@@ -1,5 +1,5 @@
 ﻿dataset,variable,tipo,faltantes,faltantes_pct,unicos
-videos,video_id,object,3,1.024,290
+videos,video_id,object,0,0.0,293
 videos,title,object,0,0.0,274
 videos,channel_name,object,0,0.0,97
 videos,channel_id,object,0,0.0,97
@@ -13,7 +13,7 @@ videos,description_snippet,object,25,8.532,236
 videos,video_url,object,0,0.0,293
 videos,query_hits,object,0,0.0,26
 videos,keywords,object,0,0.0,106
-videos,description,object,40,13.652,233
+videos,description,object,26,8.874,234
 videos,view_count,int64,0,0.0,267
 videos,publish_date,object,0,0.0,293
 videos,upload_date,object,0,0.0,293

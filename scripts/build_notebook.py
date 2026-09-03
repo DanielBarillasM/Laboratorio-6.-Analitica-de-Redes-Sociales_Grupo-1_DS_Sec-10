@@ -28,6 +28,13 @@ def main() -> None:
     counts = summary["counts"]
     bip = next(item for item in summary["networks"] if item["red"] == "bipartita_autor_video")
     authors = next(item for item in summary["networks"] if item["red"] == "proyeccion_autores")
+    video_format = summary["formats"]["videos"].upper()
+    comment_format = summary["formats"]["comments"].upper()
+    repair_note = (
+        "No fue necesario reconstruir ningún `video_id`."
+        if counts["repaired_video_ids"] == 0
+        else f"Se reconstruyeron **{counts['repaired_video_ids']} `video_id`** desde sus URL."
+    )
 
     notebook = nbf.v4.new_notebook()
     notebook["metadata"] = {
@@ -84,7 +91,7 @@ def show_csv(name, rows=10):
 print("Artefactos recién generados cargados correctamente.")"""),
         markdown(f"""<div class="section"><h2>2 · Datos e integración</h2></div>
 <div class="metric-grid"><div class="metric"><b>{counts['videos']}</b><br>videos</div><div class="metric"><b>{counts['channels']}</b><br>canales</div><div class="metric"><b>{counts['comments']}</b><br>comentarios</div><div class="metric"><b>{counts['authors']}</b><br>autores</div></div>
-Los comentarios se integraron por `video_id`: **{summary['integration_pct']:.1f}%** obtuvo coincidencia. El archivo de videos tiene extensión CSV pero contenido Excel; además se recuperaron **{counts['repaired_video_ids']} IDs** desde sus URL."""),
+Los comentarios se integraron por `video_id`: **{summary['integration_pct']:.1f}%** obtuvo coincidencia. Los formatos reales detectados fueron **{video_format}** para videos y **{comment_format}** para comentarios. {repair_note}"""),
         code("show_csv('formatos_detectados.csv'); show_csv('integracion_resumen.csv'); show_csv('video_ids_recuperados.csv')"),
         markdown("""<div class="section"><h2>3 · Calidad y preprocesamiento</h2></div>
 Se conservaron IDs como identificadores y nombres/handles solo como etiquetas. `texto_original` permanece para auditoría y sentimiento; `texto_limpio` normaliza minúsculas, HTML, URL, hashtags, menciones, puntuación, números, stopwords y emojis. No se aplicó lematización sin un modelo morfosintáctico validado para español."""),

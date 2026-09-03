@@ -50,15 +50,17 @@ El avance cubre completamente los ejercicios 1–6 y la mayor parte del ejercici
 - [Código reutilizable](src/lab6_social)
 - [Pruebas automatizadas](tests)
 
-## Consideración especial de los datos
+## Datos proporcionados y carga robusta
 
-`youtube_videos_12808423.csv` tiene extensión `.csv`, pero actualmente su contenido es un libro Excel. El cargador inspecciona la firma binaria y acepta:
+`Data/youtube_videos.csv` y `Data/youtube_comments.csv` son los archivos CSV originales indicados por la guía. Contienen, respectivamente, 293 videos con 20 variables y 406 comentarios con 17 variables. Los identificadores principales están completos y no fue necesario reconstruirlos.
+
+Para mantener la reproducibilidad ante distintas formas de descarga, el cargador inspecciona la firma binaria y acepta:
 
 - CSV real en UTF-8, UTF-8 con BOM, Windows-1252 o Latin-1;
 - archivos `.xlsx` normales;
 - libros Excel descargados con extensión `.csv`.
 
-Cuando se reemplace el archivo por el CSV verdadero, no será necesario modificar el código. Además, tres IDs que Excel interpretó como fórmulas se recuperan desde `video_url` y quedan registrados en `outputs/tables/video_ids_recuperados.csv`.
+La tabla `outputs/tables/video_ids_recuperados.csv` conserva la estructura de auditoría y queda sin registros porque los CSV auténticos contienen los 293 `video_id`. La rutina de recuperación desde `video_url` se conserva como validación defensiva para futuras exportaciones.
 
 ## Ejecución
 
@@ -114,9 +116,10 @@ python -m pytest -q
 
 ```text
 ├── Data/                   # Datos originales proporcionados
-├── Instructions/          # PDF oficial
+├── Instructions/           # PDF oficial
 ├── config/                 # Metadatos del curso y equipo
 ├── data/processed/         # Resultados intermedios reconstruibles
+├── entrega/                # ficha de presentación al repositorio oficial en Github
 ├── notebooks/              # Notebook narrativo ejecutado
 ├── outputs/
 │   ├── figures/            # EDA y visualizaciones de redes

@@ -1,10 +1,10 @@
 ﻿dataset,metrica,valor
 videos_original,filas,293
 videos_original,columnas,20
-videos_original,celdas_faltantes,94
+videos_original,celdas_faltantes,77
 videos_original,filas_duplicadas,0
-videos_original,video_id_faltantes,3
-videos_original,video_id_duplicados,2
+videos_original,video_id_faltantes,0
+videos_original,video_id_duplicados,0
 videos_original,variables_constantes,ninguna
 videos_original,atipicos_iqr,view_count:49
 comments_original,filas,406
@@ -17,7 +17,7 @@ comments_original,variables_constantes,"is_pinned, viewer_rating"
 comments_original,atipicos_iqr,reply_count:30
 videos_normalizado,filas,293
 videos_normalizado,columnas,20
-videos_normalizado,celdas_faltantes,91
+videos_normalizado,celdas_faltantes,77
 videos_normalizado,filas_duplicadas,0
 videos_normalizado,video_id_faltantes,0
 videos_normalizado,video_id_duplicados,0

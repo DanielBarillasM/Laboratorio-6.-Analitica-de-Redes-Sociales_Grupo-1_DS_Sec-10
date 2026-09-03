@@ -1,3 +1,3 @@
 ﻿dataset,archivo,extension,formato_real
-videos,youtube_videos_12808423.csv,.csv,excel
-comments,youtube_comments_12808422.xlsx,.xlsx,excel
+videos,youtube_videos.csv,.csv,csv
+comments,youtube_comments.csv,.csv,csv

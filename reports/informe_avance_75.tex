@@ -90,7 +90,7 @@ Total & 100 & 74 & Avance aproximado 75\%\\
 
 Cada fila de videos representa un video y su llave primaria es \texttt{video\_id}; cada fila de comentarios representa un comentario principal y su llave es \texttt{comment\_id}. \texttt{channel\_id} identifica el canal propietario, mientras \texttt{author\_channel\_id} identifica al autor del comentario. Los nombres y handles se usan únicamente como etiquetas visibles.
 
-El archivo \texttt{youtube\_videos\_12808423.csv} tiene extensión CSV, pero su firma binaria corresponde a un libro Excel. El cargador detecta el formato por contenido y acepta tanto este caso como el CSV verdadero que se incorpore posteriormente. Tres identificadores que inician con guion fueron almacenados como fórmulas de Excel y aparecían vacíos al usar el lector habitual; se reconstruyeron de manera auditable desde el parámetro \texttt{v} de \texttt{video\_url}.
+Se utilizaron los archivos originales \texttt{youtube\_videos.csv} y \texttt{youtube\_comments.csv} solicitados por la guía. Ambos fueron verificados como CSV reales. Los 293 identificadores de video están completos y son únicos, por lo que no fue necesario reconstruirlos. El cargador conserva detección por firma binaria y recuperación auditable desde \texttt{video\_url} como controles defensivos ante futuras exportaciones en Excel.
 
 \begin{table}[H]
 \centering
@@ -105,7 +105,7 @@ Comentarios & 406\\
 Autores únicos & 332\\
 Videos con comentarios & 19\\
 Videos sin comentarios & 274\\
-IDs de video recuperados & 3\\
+IDs de video recuperados & 0\\
 Comentarios asociados & 406 (100\%)\\
 \bottomrule
 \end{tabular}
@@ -115,7 +115,7 @@ La relación canal--video es de uno a muchos en la muestra. Un autor puede comen
 
 \section{Calidad, limpieza y preprocesamiento}
 
-Se evaluaron dimensiones, tipos, valores faltantes, duplicados, constantes, atípicos y consistencia de IDs, nombres y handles. No hay duplicados completos. Tras reparar los tres \texttt{video\_id}, las llaves son completas y únicas. \texttt{viewer\_rating} está vacío en los 406 comentarios y \texttt{is\_pinned} es constante; el primero se excluye y el segundo se conserva solo para auditoría. Las fechas relativas no se transforman en fechas exactas.
+Se evaluaron dimensiones, tipos, valores faltantes, duplicados, constantes, atípicos y consistencia de IDs, nombres y handles. No hay duplicados completos y las llaves primarias son completas y únicas. \texttt{viewer\_rating} está vacío en los 406 comentarios y \texttt{is\_pinned} es constante; el primero se excluye y el segundo se conserva solo para auditoría. Las fechas relativas no se transforman en fechas exactas.
 
 Los espacios de \texttt{like\_count\_text} se interpretan como cero y el parser contempla separadores y sufijos K, M, \emph{mil} y \emph{millones}. \texttt{reply\_count} se conserva como conteo descriptivo: no identifica autores de respuesta y, por tanto, nunca origina aristas entre usuarios.
 

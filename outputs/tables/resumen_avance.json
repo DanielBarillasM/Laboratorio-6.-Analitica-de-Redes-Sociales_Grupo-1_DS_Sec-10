@@ -1,11 +1,11 @@
 {
   "files": {
-    "videos": "youtube_videos_12808423.csv",
-    "comments": "youtube_comments_12808422.xlsx"
+    "videos": "youtube_videos.csv",
+    "comments": "youtube_comments.csv"
   },
   "formats": {
-    "videos": "excel",
-    "comments": "excel"
+    "videos": "csv",
+    "comments": "csv"
   },
   "counts": {
     "videos": 293,
@@ -13,7 +13,7 @@
     "comments": 406,
     "authors": 332,
     "videos_with_comments": 19,
-    "repaired_video_ids": 3
+    "repaired_video_ids": 0
   },
   "integration_pct": 100.0,
   "top_video": {
