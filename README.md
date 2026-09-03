@@ -84,13 +84,19 @@ python scripts/run_advance.py
 
 El script localiza automáticamente los archivos cuyo nombre contiene `videos` y `comments` dentro de `/Data`.
 
-### 3. Reconstruir el notebook
+### 3. Ejecutar directamente desde el notebook
+
+Abra `notebooks/Lab6_Avance_75.ipynb` y seleccione **Run All / Ejecutar todo**. La primera celda ejecuta el pipeline completo y regenera automáticamente las tablas y figuras antes de mostrar los resultados.
+
+El notebook debe mantenerse dentro del repositorio porque utiliza `/Data`, `/src` y `/scripts` para evitar duplicar la implementación.
+
+### 4. Reconstruir el archivo del notebook
 
 ```powershell
 python scripts/build_notebook.py
 ```
 
-### 4. Compilar el informe
+### 5. Compilar el informe
 
 ```powershell
 cd reports
@@ -98,7 +104,7 @@ pdflatex -interaction=nonstopmode -halt-on-error informe_avance_75.tex
 pdflatex -interaction=nonstopmode -halt-on-error informe_avance_75.tex
 ```
 
-### 5. Ejecutar pruebas
+### 6. Ejecutar pruebas
 
 ```powershell
 python -m pytest -q

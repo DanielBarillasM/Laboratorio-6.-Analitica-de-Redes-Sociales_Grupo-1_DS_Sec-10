@@ -14,6 +14,21 @@ import seaborn as sns
 COLORS = {"navy": "#102A43", "blue": "#2563EB", "teal": "#0F9D91", "orange": "#F59E0B", "red": "#DC2626"}
 
 
+def _stable_graph(graph: nx.Graph) -> nx.Graph:
+    """Normaliza el orden de inserción para que los layouts sean repetibles."""
+
+    stable = nx.Graph(**graph.graph)
+    for node in sorted(graph.nodes):
+        stable.add_node(node, **graph.nodes[node])
+    ordered_edges = sorted(
+        graph.edges(data=True),
+        key=lambda edge: tuple(sorted((edge[0], edge[1]))),
+    )
+    for source, target, data in ordered_edges:
+        stable.add_edge(source, target, **data)
+    return stable
+
+
 def setup_style() -> None:
     sns.set_theme(style="whitegrid", context="notebook")
     plt.rcParams.update({"figure.dpi": 130, "savefig.dpi": 180, "font.family": "DejaVu Sans"})
@@ -84,7 +99,7 @@ def save_bipartite(graph: nx.Graph, output: Path, seed: int = 42) -> None:
     setup_style()
     active = [node for node, degree in graph.degree() if degree > 0]
     isolates = [node for node, degree in graph.degree() if degree == 0]
-    active_graph = graph.subgraph(active)
+    active_graph = _stable_graph(graph.subgraph(active).copy())
     pos = nx.spring_layout(active_graph, seed=seed, weight="weight", k=0.32, iterations=100)
     fig, axes = plt.subplots(1, 2, figsize=(16, 8), gridspec_kw={"width_ratios": [4, 1]})
     author_nodes = [node for node in active_graph if active_graph.nodes[node]["node_type"] == "author"]
@@ -111,7 +126,7 @@ def save_bipartite(graph: nx.Graph, output: Path, seed: int = 42) -> None:
 def save_projection(graph: nx.Graph, title: str, output: Path, seed: int = 42) -> None:
     setup_style()
     active = [node for node, degree in graph.degree() if degree > 0]
-    active_graph = graph.subgraph(active)
+    active_graph = _stable_graph(graph.subgraph(active).copy())
     pos = nx.spring_layout(active_graph, seed=seed, weight="weight", k=0.45, iterations=120)
     weighted_degree = dict(active_graph.degree(weight="weight"))
     sizes = [25 + 8 * np.sqrt(weighted_degree[node]) for node in active_graph]
@@ -143,7 +158,7 @@ def save_degree_distributions(degrees: pd.DataFrame, output: Path) -> None:
 
 def save_communities(graph: nx.Graph, membership: dict[str, int], output: Path, seed: int = 42) -> None:
     setup_style()
-    active = graph.subgraph(membership.keys()).copy()
+    active = _stable_graph(graph.subgraph(membership.keys()).copy())
     pos = nx.spring_layout(active, seed=seed, weight="weight", k=0.45, iterations=120)
     colors = [membership[node] for node in active]
     sizes = [25 + 7 * np.sqrt(active.degree(node, weight="weight")) for node in active]

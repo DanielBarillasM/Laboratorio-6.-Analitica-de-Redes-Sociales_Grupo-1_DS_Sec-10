@@ -48,16 +48,27 @@ def main() -> None:
 </style>
 <div class="hero"><span class="tag">AVANCE · 75%</span><h1>Laboratorio 6 · Analítica de Redes Sociales</h1><p>Participación, copresencia y comunidades en una muestra de YouTube</p><p><b>Universidad del Valle de Guatemala</b> · CC3084 Data Science · Sección 10 · Grupo 1</p><p>Jorge Gabriel Palacios Sales — 231385 · Pablo Daniel Barillas Moreno — 22193 · Roberto Emiliano Otoniel — 23968</p></div>
 """),
-        markdown("""<div class="section"><h2>1 · Preparación reproducible</h2></div>
-El notebook presenta resultados generados por `scripts/run_advance.py`. La carga inspecciona la firma binaria para aceptar CSV y Excel aunque la extensión sea incorrecta. Los datos originales permanecen intactos."""),
+        markdown("""<div class="section"><h2>1 · Ejecución integral y reproducible</h2></div>
+La primera celda ejecuta directamente todo `scripts/run_advance.py`: carga e integración, auditoría de calidad, limpieza, EDA, construcción de redes, proyecciones, topología, comunidades, tablas y figuras. Por tanto, basta usar **Run All / Ejecutar todo** desde la raíz del repositorio o desde `/notebooks`. La carga inspecciona la firma binaria para aceptar CSV y Excel aunque la extensión sea incorrecta; los datos originales permanecen intactos."""),
         code("""from pathlib import Path
 import json
+import runpy
+import sys
 import pandas as pd
 from IPython.display import Image, display
 
 ROOT = Path.cwd()
-if not (ROOT / "outputs").exists():
+if not (ROOT / "Data").exists():
     ROOT = ROOT.parent
+if not (ROOT / "Data").exists() or not (ROOT / "scripts" / "run_advance.py").exists():
+    raise FileNotFoundError("Ejecute el notebook dentro del repositorio, desde la raíz o desde /notebooks.")
+sys.path.insert(0, str(ROOT / "src"))
+
+print("Ejecutando el pipeline completo del Laboratorio 6...")
+runpy.run_path(str(ROOT / "scripts" / "run_advance.py"), run_name="__main__")
+print("Pipeline regenerado correctamente.")
+print()
+
 TABLES = ROOT / "outputs" / "tables"
 FIGURES = ROOT / "outputs" / "figures"
 summary = json.loads((TABLES / "resumen_avance.json").read_text(encoding="utf-8"))
@@ -68,8 +79,9 @@ STYLES = [
 ]
 def show_csv(name, rows=10):
     frame = pd.read_csv(TABLES / name)
-    display(frame.head(rows).style.set_table_styles(STYLES).hide(axis="index"))
-print("Artefactos cargados correctamente.")"""),
+    table_uuid = name.replace(".", "_").replace("-", "_")
+    display(frame.head(rows).style.set_uuid(table_uuid).set_table_styles(STYLES).hide(axis="index"))
+print("Artefactos recién generados cargados correctamente.")"""),
         markdown(f"""<div class="section"><h2>2 · Datos e integración</h2></div>
 <div class="metric-grid"><div class="metric"><b>{counts['videos']}</b><br>videos</div><div class="metric"><b>{counts['channels']}</b><br>canales</div><div class="metric"><b>{counts['comments']}</b><br>comentarios</div><div class="metric"><b>{counts['authors']}</b><br>autores</div></div>
 Los comentarios se integraron por `video_id`: **{summary['integration_pct']:.1f}%** obtuvo coincidencia. El archivo de videos tiene extensión CSV pero contenido Excel; además se recuperaron **{counts['repaired_video_ids']} IDs** desde sus URL."""),
@@ -106,10 +118,19 @@ El avance cubre íntegramente los ejercicios 1–6 y la mayor parte del 7. La fa
 - Freeman, L. (1979). *Centrality in social networks: Conceptual clarification*. Social Networks.
 <div class="footer">Laboratorio 6 · Grupo 1 · Data Science, Sección 10 · Avance reproducible</div>"""),
     ]
+    for index, cell in enumerate(notebook["cells"], start=1):
+        cell["id"] = f"lab6-cell-{index:02d}"
 
     path = NOTEBOOKS / "Lab6_Avance_75.ipynb"
     nbf.write(notebook, path)
     executed = NotebookClient(notebook, timeout=300, kernel_name="python3", resources={"metadata": {"path": str(ROOT)}}).execute()
+    for cell in executed.cells:
+        if cell.cell_type == "code":
+            cell.metadata.pop("execution", None)
+            for output in cell.get("outputs", []):
+                data = output.get("data", {})
+                if "text/html" in data:
+                    data.pop("text/plain", None)
     nbf.write(executed, path)
     print(f"Notebook generado y ejecutado: {path}")
 

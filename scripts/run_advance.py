@@ -62,6 +62,8 @@ def export_graph_edges(graph: nx.Graph, name: str) -> pd.DataFrame:
         {"source": source, "target": target, "weight": data.get("weight", 1)}
         for source, target, data in graph.edges(data=True)
     ])
+    if not table.empty:
+        table = table.sort_values(["source", "target"]).reset_index(drop=True)
     table.to_csv(TABLES / f"aristas_{name}.csv", index=False, encoding="utf-8-sig")
     return table
 
@@ -172,6 +174,7 @@ def main() -> None:
     metrics = pd.DataFrame([graph_metrics(graph, name) for name, graph in graphs.items()])
     metrics.to_csv(TABLES / "metricas_redes.csv", index=False, encoding="utf-8-sig")
     degrees = pd.concat([degree_table(graph, name) for name, graph in graphs.items()], ignore_index=True)
+    degrees = degrees.sort_values(["red", "node"]).reset_index(drop=True)
     degrees.to_csv(TABLES / "distribuciones_grado.csv", index=False, encoding="utf-8-sig")
     degrees[degrees["degree"] <= 1].to_csv(
         TABLES / "nodos_perifericos_y_aislados.csv", index=False, encoding="utf-8-sig"
@@ -180,7 +183,10 @@ def main() -> None:
 
     membership, modularity, algorithm = detect_author_communities(author_projection, SEED)
     community_summary, comment_membership = community_characterization(membership, comments)
-    membership_table = pd.DataFrame([{"node": node, "community": community} for node, community in membership.items()])
+    membership_table = pd.DataFrame([
+        {"node": node, "community": community}
+        for node, community in sorted(membership.items())
+    ])
     membership_table.to_csv(TABLES / "membresia_comunidades.csv", index=False, encoding="utf-8-sig")
     comment_membership.to_csv(TABLES / "comentarios_comunidades.csv", index=False, encoding="utf-8-sig")
     if not community_summary.empty:

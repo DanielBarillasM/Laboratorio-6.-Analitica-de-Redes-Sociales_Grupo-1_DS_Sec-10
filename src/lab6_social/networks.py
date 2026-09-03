@@ -18,6 +18,21 @@ def _video_node(identifier: str) -> str:
     return f"video::{identifier}"
 
 
+def _stable_graph(graph: nx.Graph) -> nx.Graph:
+    """Recrea un grafo con orden determinista de nodos y aristas."""
+
+    stable = nx.Graph(**graph.graph)
+    for node in sorted(graph.nodes):
+        stable.add_node(node, **graph.nodes[node])
+    ordered_edges = sorted(
+        graph.edges(data=True),
+        key=lambda edge: tuple(sorted((edge[0], edge[1]))),
+    )
+    for source, target, data in ordered_edges:
+        stable.add_edge(source, target, **data)
+    return stable
+
+
 def build_bipartite_network(videos: pd.DataFrame, comments: pd.DataFrame) -> tuple[nx.Graph, pd.DataFrame, pd.DataFrame]:
     """Crea la red autor-video; el peso cuenta comentarios del autor en el video."""
 
@@ -54,9 +69,11 @@ def build_bipartite_network(videos: pd.DataFrame, comments: pd.DataFrame) -> tup
 
 
 def build_projections(graph: nx.Graph) -> tuple[nx.Graph, nx.Graph]:
-    authors = [node for node, data in graph.nodes(data=True) if data["node_type"] == "author"]
-    videos = [node for node, data in graph.nodes(data=True) if data["node_type"] == "video"]
-    return bipartite.weighted_projected_graph(graph, authors), bipartite.weighted_projected_graph(graph, videos)
+    authors = sorted(node for node, data in graph.nodes(data=True) if data["node_type"] == "author")
+    videos = sorted(node for node, data in graph.nodes(data=True) if data["node_type"] == "video")
+    author_projection = bipartite.weighted_projected_graph(graph, authors)
+    video_projection = bipartite.weighted_projected_graph(graph, videos)
+    return _stable_graph(author_projection), _stable_graph(video_projection)
 
 
 def graph_metrics(graph: nx.Graph, graph_name: str) -> dict[str, float | int | str]:
@@ -92,7 +109,7 @@ def degree_table(graph: nx.Graph, graph_name: str) -> pd.DataFrame:
 
 def detect_author_communities(author_projection: nx.Graph, seed: int = 42) -> tuple[dict[str, int], float, str]:
     active_nodes = [node for node, degree in author_projection.degree() if degree > 0]
-    active_graph = author_projection.subgraph(active_nodes).copy()
+    active_graph = _stable_graph(author_projection.subgraph(active_nodes).copy())
     if active_graph.number_of_edges() == 0:
         return {}, 0.0, "sin aristas"
     try:
@@ -101,8 +118,8 @@ def detect_author_communities(author_projection: nx.Graph, seed: int = 42) -> tu
     except AttributeError:
         communities = nx.community.greedy_modularity_communities(active_graph, weight="weight")
         algorithm = "modularidad voraz ponderada"
-    ordered = sorted(communities, key=len, reverse=True)
-    membership = {node: index + 1 for index, group in enumerate(ordered) for node in group}
+    ordered = sorted((set(group) for group in communities), key=lambda group: (-len(group), min(group)))
+    membership = {node: index + 1 for index, group in enumerate(ordered) for node in sorted(group)}
     modularity = nx.community.modularity(active_graph, ordered, weight="weight")
     return membership, float(modularity), algorithm
 
