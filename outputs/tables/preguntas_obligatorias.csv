@@ -1,7 +1,9 @@
 ﻿pregunta,evidencia
-¿Qué videos y canales concentran la mayor participación?,El video líder es 'Qué rico come tu diputado' (161 comentarios); el canal líder es 'Quorum' (256). El top 5 de videos reúne 75.4 %.
-¿Existen audiencias compartidas?,La proyección video-video contiene 11 pares conectados por autores compartidos; la proyección autor-autor contiene 10732 pares.
-¿Qué autores funcionan como puentes?,En el avance se observan 9 autores presentes en más de un video; su intermediación y efecto de remoción se reservan para la fase final.
-¿Qué temas y sentimientos caracterizan comunidades?,"Se detectaron 10 comunidades con modularidad 0.395; sus términos, videos y categorías están tabulados. El sentimiento formal en español queda pendiente."
-¿Coinciden visualizaciones y participación?,La asociación de Spearman en los 293 videos es rho=0.080; las visualizaciones y comentarios son cortes de cobertura distintos.
-¿Qué limita las conclusiones?,Solo 19 de 293 videos tienen comentarios recolectados; la selección depende de consultas y los conteos son fotografías temporales.
+¿Qué videos y canales concentran la mayor participación?,El video líder es 'Qué rico come tu diputado' (161 comentarios) y el canal líder es 'Quorum' (256). Los cinco videos principales concentran 75.4 %.
+¿Existen audiencias compartidas?,"Sí, aunque son escasas: 9 autores aparecen en más de un video y la proyección video–video contiene 11 conexiones."
+¿Qué autores funcionan como puentes?,"Se identificaron 7 puentes estructurales mediante intermediación, punto de articulación y remoción: @virgiliogarcia3039; @inge_vergueta; @josegil3813."
+¿Qué temas y sentimientos caracterizan las comunidades?,"Las 10 comunidades se describen por términos, videos, canales y categorías. En sentimiento: C1: negativo (161 comentarios); C2: negativo (83 comentarios); C3: negativo (60 comentarios). Solo se interpretan formalmente grupos con n≥5."
+¿Qué videos articulan audiencias?,Hay 5 videos que son puntos de articulación: Qué rico come tu diputado; Internet: escoger el menos malo; Conferencia de Prensa del Gobierno de Guatemala. #LaRondaGt. Su remoción separa segmentos de la única componente de videos conectados.
+¿Qué ocurre al remover nodos centrales?,"De 25 nodos evaluados, 12 aumentan el número de componentes. El mayor incremento de fragmentación (0.239) ocurre al retirar '@virgiliogarcia3039'."
+¿Cuál es el sentimiento general?,"Predomina negativo: 61.3 % negativo, 18.5 % neutral y 20.2 % positivo; confianza media 0.818."
+¿Qué limita las conclusiones?,"Solo 19 de 293 videos tienen comentarios; la muestra depende de consultas y fecha de recolección. reply_count no revela quién respondió, por lo que no se inventaron aristas de respuesta. El sentimiento es inferencia automática y se acompaña de probabilidades y diagnóstico de confianza."

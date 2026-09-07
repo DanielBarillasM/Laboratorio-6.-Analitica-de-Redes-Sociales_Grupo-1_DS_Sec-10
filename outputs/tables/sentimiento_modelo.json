@@ -1,0 +1,10 @@
+{
+  "modelo": "pysentimiento/robertuito-sentiment-analysis",
+  "revision": "a2cc0f67ebd705c55191e25a05ba23d885fcc09b",
+  "transformers": "4.57.6",
+  "dispositivo": "cpu",
+  "batch_size": 16,
+  "max_length": 128,
+  "comentarios": 406,
+  "origen": "cache validada por ID, texto y modelo"
+}

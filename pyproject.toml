@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "lab6-social-analytics"
 version = "0.1.0"
-description = "Avance reproducible del Laboratorio 6 de analítica de redes sociales en YouTube."
+description = "Entrega final reproducible del Laboratorio 6 de analítica de redes sociales en YouTube."
 requires-python = ">=3.11"
 dependencies = [
   "matplotlib>=3.8",
@@ -18,6 +18,8 @@ dependencies = [
   "scikit-learn>=1.5",
   "scipy>=1.13",
   "seaborn>=0.13",
+  "torch>=2.2",
+  "transformers>=4.48,<5",
 ]
 
 [project.optional-dependencies]
@@ -29,4 +31,3 @@ where = ["src"]
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
-

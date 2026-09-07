@@ -10,7 +10,7 @@
     {"nombre": "Pablo Daniel Barillas Moreno", "carne": "22193"},
     {"nombre": "Roberto Emiliano Otoniel", "carne": "23968"}
   ],
-  "avance": 75,
+  "estado": "entrega final",
+  "avance": 100,
   "semilla": 42
 }
-

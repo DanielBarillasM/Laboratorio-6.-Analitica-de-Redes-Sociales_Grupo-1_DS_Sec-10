@@ -1,0 +1,7 @@
+﻿limitacion,implicacion,mitigacion
+Cobertura de comentarios,Hay comentarios para 19 de 293 videos.,Reportar explícitamente ceros y separar ausencia de recolección de ausencia de audiencia.
+Muestreo por consultas,Los temas dependen de las búsquedas que originaron el dataset.,Conservar source_query/source_group y restringir la inferencia al corpus.
+Identidad observable,Un canal de autor no equivale necesariamente a una persona y puede cambiar de nombre.,Usar author_channel_id como nodo estable y nombres solo como etiquetas.
+Respuestas,"reply_count es un conteo, sin autores ni texto de las respuestas.",No crear aristas de respuesta; analizar únicamente coparticipación observada.
+Sentimiento automático,"Ironía, jerga, código mixto y contexto político pueden inducir errores.","Modelo español para texto social, probabilidades, umbral de confianza y agregación mínima n≥5."
+Instantánea temporal,"Vistas, likes y comentarios cambian después de la extracción.",Tratar métricas como corte temporal y evitar causalidad.

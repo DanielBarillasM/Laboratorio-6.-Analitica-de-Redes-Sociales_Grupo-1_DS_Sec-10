@@ -8,5 +8,6 @@ pandas>=2.2
 scikit-learn>=1.5
 scipy>=1.13
 seaborn>=0.13
+torch>=2.2
+transformers>=4.48,<5
 pytest>=8.0
-

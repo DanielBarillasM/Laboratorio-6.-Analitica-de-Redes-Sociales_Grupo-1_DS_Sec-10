@@ -1,0 +1,10 @@
+﻿criterio,puntos,estado,evidencia,puntos_cubiertos
+"Calidad, limpieza y preprocesamiento",18,completo,calidad_resumen.csv; auditoria_limpieza_texto.csv; tratamiento_variables.csv,18
+Análisis exploratorio,18,completo,participacion_por_video.csv; frecuencias; concentración; visibilidad,18
+Red bipartita autor-video,10,completo,nodos_bipartita.csv; aristas_bipartita.csv; red_bipartita_completa.png,10
+Proyecciones,8,completo,aristas_autores.csv; aristas_videos.csv; ambas figuras,8
+Topología y fragmentación,12,completo,metricas_redes.csv; componentes; impacto_remocion.csv,12
+Comunidades,10,completo,comunidades_caracterizacion_final.csv; comunidades_autores.png,10
+Nodos centrales y participantes puente,7,completo,centralidad_autores.csv; autores_puente.csv; paneles finales,7
+Contenido y sentimiento,5,completo,sentimiento_comentarios.csv; agregaciones; figuras; modelo.json,5
+"Interpretación, limitaciones y conclusiones",12,completo,preguntas_obligatorias.csv; conclusiones_finales.csv; limitaciones_finales.csv; informe,12
