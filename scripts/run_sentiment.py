@@ -27,7 +27,13 @@ def main() -> None:
     comments = load_comments(DATA / "youtube_comments.csv")
     videos, _ = load_videos(DATA / "youtube_videos.csv")
     comments, _audit = add_clean_text(comments)
-    comments, _metadata = predict_sentiment(comments)
+    predictions, _metadata = predict_sentiment(comments)
+    prediction_columns = [
+        "comment_id", "sentimiento", "etiqueta_modelo", "prob_negativo",
+        "prob_neutral", "prob_positivo", "confianza", "margen_confianza",
+        "baja_confianza",
+    ]
+    comments = comments.merge(predictions[prediction_columns], on="comment_id", how="left", validate="one_to_one")
 
     videos_small = videos[["video_id", "title", "channel_id", "channel_name", "category"]]
     merged = comments.merge(videos_small, on="video_id", how="left", suffixes=("", "_video"))

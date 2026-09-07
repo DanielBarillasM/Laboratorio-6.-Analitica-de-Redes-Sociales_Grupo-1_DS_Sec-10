@@ -1,2 +1,8 @@
-﻿grupo,n_comentarios,negativos,neutrales,positivos,prob_negativo_media,prob_neutral_media,prob_positivo_media,confianza_media,baja_confianza_n,pct_negativo,pct_neutral,pct_positivo,sentimiento_dominante,muestra_interpretable,minimo_muestra
-general,406,249,75,82,0.5760995784540445,0.21200898703270285,0.21189143178867534,0.8184942393173725,61,61.330049261083744,18.472906403940886,20.19704433497537,negativo,True,5
+metrica,valor
+comentarios_totales,406.0
+comentarios_con_sentimiento,406.0
+cobertura_sentimiento_pct,100.0
+positivos,82.0
+negativos,249.0
+neutrales,75.0
+confianza_promedio,0.818
