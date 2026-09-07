@@ -1,194 +1,356 @@
-\documentclass[11pt,letterpaper]{article}
+\documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage{geometry}
-\geometry{top=2.1cm,bottom=2.1cm,left=2.2cm,right=2.2cm}
-\usepackage{graphicx,booktabs,array,tabularx,longtable,float}
+\usepackage[letterpaper,margin=2.2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{float}
 \usepackage{xcolor}
-\usepackage[hidelinks]{hyperref}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!65!black,citecolor=teal!55!black}
+\graphicspath{{../outputs/figures/}}
 \definecolor{navy}{HTML}{102A43}
-\definecolor{blue}{HTML}{2563EB}
 \definecolor{teal}{HTML}{0F9D91}
-\definecolor{paper}{HTML}{F1F5F9}
-\definecolor{slate}{HTML}{475569}
-\pagestyle{plain}
+\definecolor{soft}{HTML}{F1F5F9}
+\newcommand{\repo}{\href{https://github.com/DanielBarillasM/Laboratorio-6.-Analitica-de-Redes-Sociales_Grupo-1_DS_Sec-10}{Repositorio de GitHub}}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.55em}
-\emergencystretch=3em
-\newcommand{\figura}[3]{\begin{figure}[H]\centering\includegraphics[width=#1\textwidth]{#2}\caption{#3}\end{figure}}
-\newcommand{\hallazgo}[1]{\vspace{3pt}\noindent\colorbox{paper}{\parbox{0.95\linewidth}{\textcolor{navy}{\textbf{Hallazgo.}} #1}}\vspace{5pt}}
-\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=navy}
-\renewcommand{\contentsname}{Contenido}
-\renewcommand{\figurename}{Figura}
-\renewcommand{\tablename}{Tabla}
+\setlength{\parskip}{0.6em}
 
 \begin{document}
-\hypersetup{pageanchor=false}
+
 \begin{titlepage}
 \pagecolor{navy}\color{white}
-\vspace*{1.2cm}
+\centering
+\vspace*{1.4cm}
 {\Large Universidad del Valle de Guatemala\par}
-\vspace{0.35cm}{\large CC3084 · Data Science · Sección 10\par}
+\vspace{0.4cm}
+{\large Facultad de Ingeniería\par}
+{\large CC3084 -- Data Science, Sección 10\par}
 \vfill
-{\Huge\bfseries Laboratorio 6\par}\vspace{0.3cm}
-{\LARGE Analítica de Redes Sociales\par}\vspace{0.25cm}
-{\Large Participación, comunidades, puentes y sentimiento en YouTube\par}
+{\Huge\bfseries Laboratorio 6\par}
+\vspace{0.3cm}
+{\LARGE Analítica de Redes Sociales\par}
+\vspace{0.9cm}
+{\Large\color{teal!25!white}Documento final -- 100\%\par}
 \vfill
-\begin{tabular}{ll}
-\textbf{Jorge Gabriel Palacios Sales} & 231385\\
-\textbf{Pablo Daniel Barillas Moreno} & 22193\\
-\textbf{Roberto Emiliano Otoniel} & 23968\\
+{\large Grupo 1\par}
+\vspace{0.5cm}
+\begin{tabular}{rl}
+Jorge Gabriel Palacios Sales & 231385\\
+Pablo Daniel Barillas Moreno & 22193\\
+Roberto Emiliano Otoniel & 23968\\
 \end{tabular}
 \vfill
-{\large Grupo 1 · Segundo semestre 2026\par}
-\vspace{0.5cm}{\small Entrega final reproducible\par}
+{\large Segundo semestre de 2026\par}
 \end{titlepage}
-\hypersetup{pageanchor=true}
-\pagenumbering{roman}
 \nopagecolor\color{black}
 
-\tableofcontents\newpage
-\pagenumbering{arabic}
+\tableofcontents
+\newpage
 
 \section{Resumen ejecutivo}
-Se analizaron 293 videos y 406 comentarios asociados a 332 autores y 97 canales. La integración comentario--video fue de 100\%, pero la cobertura de comentarios alcanza solo 19 videos; esta asimetría se conserva y discute como limitación. La red bipartita contiene 625 nodos y 343 aristas únicas autor--video. Sus proyecciones revelan una participación fuertemente localizada: nueve autores comentaron en más de un video, solo diez videos comparten audiencia y 283 videos quedan aislados.
 
-El análisis estructural identifica siete autores puente y cinco videos articuladores. La remoción de 12 de 25 candidatos incrementa la fragmentación. Louvain ponderado detecta diez comunidades, con modularidad 0.395. El análisis de sentimiento con RoBERTuito clasifica 61.3\% de comentarios como negativos, 18.5\% neutrales y 20.2\% positivos, con confianza media de 0.818. Estos resultados caracterizan el corpus entregado y no deben generalizarse a todos los usuarios de YouTube.
+Se analizaron 293 videos, 97 canales, 406 comentarios y 332 autores de una muestra obtenida de YouTube. El flujo reproducible carga archivos CSV o Excel, normaliza identificadores, limpia texto en español, integra las dos tablas, describe participación y construye la red autor--video, sus proyecciones autor--autor y video--video, métricas topológicas, comunidades (Louvain ponderado), centralidades, participantes puente/articuladores y análisis de sentimiento léxico en español. Este documento cierra los diez ejercicios del laboratorio.
 
-\begin{table}[H]\centering
-\begin{tabular}{lr@{\qquad}lr}\toprule
-Videos & 293 & Comentarios & 406\\
-Canales & 97 & Autores & 332\\
-Videos con comentarios & 19 & Integración & 100\%\\
-Comunidades & 10 & Modularidad & 0.395\\
-Autores puente & 7 & Videos articuladores & 5\\\bottomrule
+El 100\% de los comentarios se asoció con un video. La participación está fuertemente concentrada: el video \emph{Qué rico come tu diputado} contiene 161 comentarios (39.7\% del total), los cinco videos principales reúnen 75.4\%, y el canal Quorum concentra 256 comentarios (63.1\%). La red bipartita completa contiene 625 nodos y 343 aristas; conserva 274 videos aislados para representar la cobertura real. La proyección de autores presenta una componente principal con 83.1\% de los autores y diez comunidades con modularidad 0.395.
+
+El avance cubre 74 de 100 puntos trazables de la rúbrica. La centralidad avanzada, el sentimiento formal en español, el análisis de nodos articuladores y la síntesis final se reservan para la siguiente entrega.
+
+\section{Alcance del avance}
+
+El PDF define como avance mínimo los ejercicios 1 al 4. Para aproximarse al 75\% solicitado se completaron además las proyecciones, la topología y la detección de comunidades. La caracterización temática de comunidades está incluida; su dimensión de sentimiento queda pendiente para emplear una herramienta validada para español.
+
+\begin{table}[H]
+\centering
+\caption{Cobertura planificada de la rúbrica.}
+\begin{tabular}{p{0.53\textwidth}rrl}
+\toprule
+Criterio & Total & Cubierto & Estado\\
+\midrule
+Calidad, limpieza y preprocesamiento & 18 & 18 & Completo\\
+Análisis exploratorio & 18 & 18 & Completo\\
+Red bipartita autor--video & 10 & 10 & Completo\\
+Proyecciones & 8 & 8 & Completo\\
+Topología y fragmentación & 12 & 12 & Completo\\
+Comunidades & 10 & 8 & Falta sentimiento\\
+Centralidad y participantes puente & 7 & 0 & Fase final\\
+Contenido y sentimiento & 5 & 0 & Fase final\\
+Interpretación y conclusiones finales & 12 & 0 & Fase final\\
+\midrule
+Total & 100 & 74 & Avance aproximado 75\%\\
+\bottomrule
 \end{tabular}
-\caption{Indicadores principales de la entrega final.}
 \end{table}
 
-\section{Datos, calidad y preprocesamiento}
-Los insumos oficiales son \texttt{youtube\_videos.csv} y \texttt{youtube\_comments.csv}. El cargador inspecciona el contenido y admite CSV real, XLSX real o un libro Excel con extensión incorrecta. Se normalizaron tipos, espacios, conteos e identificadores; no fue necesario reconstruir \texttt{video\_id}. Se conservaron el texto original y una versión limpia: la segunda se usa para frecuencias, mientras la primera alimenta sentimiento para preservar negación, emojis y puntuación.
+\section{Datos, unidades e integración}
 
-En videos, cada fila representa un video y \texttt{video\_id} es llave primaria. En comentarios, cada fila representa un comentario principal y \texttt{comment\_id} es llave primaria; \texttt{video\_id} es la llave foránea. \texttt{channel\_id} identifica al canal propietario, mientras \texttt{author\_channel\_id} identifica al autor. La categoría pertenece al video y \texttt{source\_query} documenta la consulta de recolección, no necesariamente el tema definitivo. El diagnóstico incluye dimensiones, tipos, faltantes, duplicados, constantes, atípicos por IQR y consistencia de IDs, nombres y handles.
+Cada fila de videos representa un video y su llave primaria es \texttt{video\_id}; cada fila de comentarios representa un comentario principal y su llave es \texttt{comment\_id}. \texttt{channel\_id} identifica el canal propietario, mientras \texttt{author\_channel\_id} identifica al autor del comentario. Los nombres y handles se usan únicamente como etiquetas visibles.
 
-\begin{itemize}
-  \item Los IDs, no los nombres visibles, definen los nodos.
-  \item Los videos sin comentarios se conservan como aislados.
-  \item \texttt{viewer\_rating} se excluye por ausencia total; \texttt{is\_pinned} se mantiene solo para auditoría por ser constante.
-  \item \texttt{reply\_count} es descriptivo: no contiene autor ni texto de cada respuesta y, por tanto, no genera aristas.
-  \item Los conteos de texto admiten comas, espacios y sufijos \texttt{K}, \texttt{mil}, \texttt{M}, \texttt{millón/millones}; los vacíos descriptivos se convierten a cero y los valores inválidos, a faltante.
-  \item La integración valida una relación muchos-a-uno entre comentarios y videos.
-\end{itemize}
+Se utilizaron los archivos originales \texttt{youtube\_videos.csv} y \texttt{youtube\_comments.csv} solicitados por la guía. Ambos fueron verificados como CSV reales. Los 293 identificadores de video están completos y son únicos, por lo que no fue necesario reconstruirlos. El cargador conserva detección por firma binaria y recuperación auditable desde \texttt{video\_url} como controles defensivos ante futuras exportaciones en Excel.
 
-\figura{0.95}{../outputs/figures/eda_panorama.png}{Panorama exploratorio de videos y comentarios.}
+\begin{table}[H]
+\centering
+\caption{Dimensiones e integración.}
+\begin{tabular}{lr}
+\toprule
+Indicador & Valor\\
+\midrule
+Videos & 293\\
+Canales únicos & 97\\
+Comentarios & 406\\
+Autores únicos & 332\\
+Videos con comentarios & 19\\
+Videos sin comentarios & 274\\
+IDs de video recuperados & 0\\
+Comentarios asociados & 406 (100\%)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La relación canal--video es de uno a muchos en la muestra. Un autor puede comentar varios videos y un video puede recibir comentarios de varios autores. \texttt{source\_query} describe cómo se obtuvo el registro, no necesariamente su tema definitivo.
+
+\section{Calidad, limpieza y preprocesamiento}
+
+Se evaluaron dimensiones, tipos, valores faltantes, duplicados, constantes, atípicos y consistencia de IDs, nombres y handles. No hay duplicados completos y las llaves primarias son completas y únicas. \texttt{viewer\_rating} está vacío en los 406 comentarios y \texttt{is\_pinned} es constante; el primero se excluye y el segundo se conserva solo para auditoría. Las fechas relativas no se transforman en fechas exactas.
+
+Los espacios de \texttt{like\_count\_text} se interpretan como cero y el parser contempla separadores y sufijos K, M, \emph{mil} y \emph{millones}. \texttt{reply\_count} se conserva como conteo descriptivo: no identifica autores de respuesta y, por tanto, nunca origina aristas entre usuarios.
+
+Para cada comentario se conserva \texttt{texto\_original} y se produce \texttt{texto\_limpio}. La limpieza decodifica HTML, convierte a minúsculas, elimina URL y menciones, retiene la palabra de los hashtags sin el símbolo, extrae palabras Unicode, elimina números, puntuación, emojis y una lista explícita de stopwords en español. Los emojis permanecen en el original para el futuro análisis de sentimiento. No se aplicó lematización en esta fase porque hacerlo sin un modelo morfosintáctico validado para español podría deformar nombres y términos temáticos.
+
+\begin{table}[H]
+\centering
+\caption{Efecto cuantificado de la limpieza textual.}
+\begin{tabular}{lr}
+\toprule
+Métrica & Valor\\
+\midrule
+Registros de entrada & 406\\
+Textos modificados & 403\\
+Textos vacíos antes & 0\\
+Textos vacíos después & 6\\
+Duplicados textuales antes & 2\\
+Duplicados textuales después & 11\\
+Registros eliminados & 0\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Los textos vacíos posteriores no se eliminan: mantienen la trazabilidad del comentario y sus atributos de red, pero se excluyen naturalmente de frecuencias léxicas.
 
 \section{Análisis exploratorio}
-Se calcularon participaciones por video, canal y autor, concentración acumulada, distribución temática y asociación entre visibilidad y comentarios. Los cinco videos con mayor actividad reúnen 75.4\% de los comentarios. En los 293 videos, vistas y comentarios tienen asociación débil (Spearman $\rho=0.080$, $p=0.170$); entre los 19 videos con comentarios, $\rho=0.811$ ($p<0.001$). La diferencia es efecto de cobertura/selección, no evidencia causal.
 
-\figura{0.98}{../outputs/figures/frecuencias_contenido.png}{Términos, bigramas y hashtags frecuentes después de la limpieza.}
-\figura{0.88}{../outputs/figures/visibilidad_vs_participacion.png}{Relación descriptiva entre vistas y participación observada.}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\textwidth]{eda_panorama.png}
+\caption{Categorías, participación, visualizaciones y respuestas en la muestra.}
+\label{fig:eda}
+\end{figure}
 
-\hallazgo{La concentración de comentarios no demuestra centralidad estructural. Un video con muchos comentarios puede formar una camarilla grande y, aun así, no conectar audiencias distintas.}
+La categoría dominante es \emph{News \& Politics}. Las visualizaciones son marcadamente asimétricas: la mediana es 1,175, mientras el máximo supera 8.19 millones. Esta diferencia justifica escalas logarítmicas y medidas robustas. La mayoría de comentarios no recibió respuestas y la cobertura se concentra en solo 19 videos.
 
-\section{Construcción de redes}
-\subsection{Red bipartita autor--video}
-Cada autor y cada video es un nodo de distinto tipo. Existe una arista si el autor comentó el video; su peso conserva la cantidad de comentarios de esa pareja. La red tiene 625 nodos y 343 aristas únicas. Esta definición expresa participación observable, no amistad, aprobación ni coordinación.
-\figura{0.96}{../outputs/figures/red_bipartita_completa.png}{Red bipartita completa; los aislados se conservan para representar la cobertura real.}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\textwidth]{frecuencias_contenido.png}
+\caption{Palabras, bigramas y hashtags frecuentes después de la limpieza.}
+\label{fig:texto}
+\end{figure}
 
-\subsection{Proyecciones}
-En la proyección autor--autor, dos autores se conectan al comentar un mismo video. En la proyección video--video, dos videos se conectan si comparten al menos un autor. Los pesos cuentan videos o autores compartidos, respectivamente. La primera red contiene 332 nodos y 10,732 aristas; la segunda, 293 nodos y 11 aristas.
-\figura{0.82}{../outputs/figures/proyeccion_autores.png}{Proyección de coparticipación entre autores.}
-\figura{0.82}{../outputs/figures/proyeccion_videos.png}{Proyección entre videos con audiencia compartida.}
+Las frecuencias reflejan principalmente conversación política, asuntos públicos, Guatemala, gobierno, universidad y condiciones sociales. Se reportan tanto frecuencias como probabilidades relativas en los CSV, para que los resultados sean comparables y reconstruibles. Una nube de palabras no se usó como sustituto de estas comparaciones cuantitativas.
 
-\section{Topología y fragmentación}
-Se reportaron componentes, densidad, grados, periferia y tamaño de la componente mayor. La proyección de videos contiene una sola componente de diez videos conectados y 283 aislados. La proyección de autores presenta transitividad 0.984, agrupamiento ponderado 0.486 y conectividad de nodos/aristas 1/5 en su componente mayor; la de videos presenta transitividad 0.316, agrupamiento 0.006 y conectividad 1/1. La forma de las proyecciones surge de camarillas inducidas por cada video: hay redundancia dentro de ellas y pocos enlaces entre ellas.
+\subsection{Concentración de participación}
 
-Para comprobar qué nodos son indispensables, se retiraron candidatos elegidos por centralidad y articulación. De 25 nodos evaluados, 12 aumentan el número de componentes. El mayor incremento de fragmentación es 0.239 al remover a \texttt{@virgiliogarcia3039}.
-\figura{0.94}{../outputs/figures/impacto_remocion.png}{Cambio estructural después de remover candidatos centrales.}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{concentracion_participacion.png}
+\caption{Participación acumulada en las unidades más activas.}
+\label{fig:concentracion}
+\end{figure}
 
-\section{Comunidades}
-Se seleccionó la proyección autor--autor porque representa patrones de coparticipación y permite asociar directamente el contenido escrito por los participantes. Louvain maximiza modularidad y usa como peso el número de videos compartidos; con semilla 42 produjo diez comunidades y modularidad 0.395. Cada grupo se caracterizó mediante tamaño, intensidad, aristas internas y externas, densidad, articuladores, términos, videos, canales, categorías y sentimiento. Cuatro autores aislados no reciben una comunidad artificial: para agregaciones se registran explícitamente como grupo 0, ``sin comunidad''.
+El video principal reúne 39.7\% de los comentarios; los tres primeros, 63.1\%; los cinco primeros, 75.4\%; y los diez primeros, 93.6\%. Quorum concentra 63.1\% de los comentarios, y los tres canales principales 86.5\%. Por ello, las propiedades observadas describen sobre todo unos pocos contenidos activos.
 
-La comunidad 1 reúne 126 autores y 161 comentarios en tres videos/canales; predominan ``pueblo'', ``dinero'' y ``diputados'', con 80.7\% negativo. La comunidad 2 incluye 61 autores y 83 comentarios alrededor de Gobierno/Noti7 y términos como ``presidente'', ``Guatemala'' y ``Arévalo''; presenta 44.6\% negativo, 27.7\% neutral y 27.7\% positivo. La comunidad 3 contiene 55 autores y 60 comentarios principalmente sobre USAC/corrupción en Quorum y TN23; presenta 61.7\% negativo. Las comunidades 2 y 3 dependen de pocos nodos articuladores, mientras que la 1 es internamente muy densa. Como contraste adicional, la comunidad 5 es 84.0\% positiva (25 comentarios). Los grupos menores que cinco se muestran, pero no se interpretan formalmente.
-\figura{0.86}{../outputs/figures/comunidades_autores.png}{Comunidades detectadas en la proyección autor--autor.}
-\figura{0.94}{../outputs/figures/sentimiento_por_comunidad.png}{Distribución de sentimiento por comunidad; el grupo 0 contiene aislados.}
+\subsection{Visibilidad y participación}
 
-\section{Centralidad, puentes y articuladores}
-Se usaron medidas complementarias: grado y grado ponderado para alcance directo; intermediación para circulación entre regiones; cercanía armónica por la desconexión de la red; PageRank ponderado para relevancia de vecinos. La etiqueta de puente estructural exige intermediación positiva, condición de punto de articulación y un efecto medido al remover el nodo.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{visibilidad_vs_participacion.png}
+\caption{Visualizaciones frente a comentarios recolectados.}
+\label{fig:visibilidad}
+\end{figure}
 
-Siete autores cumplen la definición: \texttt{@virgiliogarcia3039}, \texttt{@inge\_vergueta}, \texttt{@josegil3813}, \texttt{@franciscoflores3120}, \texttt{@hashojea7348}, \texttt{@MarcosCarillo-b1r} y \texttt{@moisesvaldez4043}. Dos autores adicionales presentan intermediación positiva, pero cuentan con rutas alternativas y se clasifican como puentes redundantes.
+En los 293 videos, Spearman produce $\rho=0.080$ ($p=0.170$), asociación débil y no significativa. Al restringir a los 19 videos con comentarios, $\rho=0.811$ ($p<0.001$). La diferencia no debe interpretarse como contradicción: la primera estimación incorpora 274 ceros estructurales causados por cobertura, mientras la segunda sufre selección. Las visualizaciones y comentarios también fueron observados en un momento específico y no miden exactamente el mismo proceso.
 
-Cinco videos son articuladores: ``Qué rico come tu diputado'', ``Internet: escoger el menos malo'', ``Conferencia de Prensa del Gobierno de Guatemala. \#LaRondaGt'', ``La cooptación de Walter Mazariegos en la USAC'' e ``Inician los trabajos de recuperación del Puente Belice II.''
-\figura{0.93}{../outputs/figures/autores_puente.png}{Autores puente y evidencia estructural.}
-\figura{0.93}{../outputs/figures/videos_articuladores.png}{Videos que articulan audiencias compartidas.}
+\section{Preguntas obligatorias y adicionales}
 
-\hallazgo{Recurrencia e intermediación no son equivalentes. Comentar varios videos permite tender puentes, pero la intermediación depende de qué regiones se conectan y de si existen rutas alternativas.}
-
-\section{Contenido y sentimiento}
-Se empleó \href{https://huggingface.co/pysentimiento/robertuito-sentiment-analysis}{\texttt{pysentimiento/robertuito-sentiment-analysis}}, un clasificador NEG/NEU/POS basado en RoBERTuito para texto social en español. Se guardan probabilidades de las tres clases, etiqueta, confianza, margen, revisión del modelo, versión de \texttt{transformers} y huella SHA-256 del texto. La caché solo se reutiliza cuando coinciden modelo, IDs y textos; \texttt{LAB6\_FORCE\_SENTIMENT=1} fuerza una nueva inferencia.
-
-\begin{table}[H]\centering
-\begin{tabular}{lrr}\toprule
-Clase & Comentarios & Porcentaje\\\midrule
-Negativo & 249 & 61.3\%\\
-Neutral & 75 & 18.5\%\\
-Positivo & 82 & 20.2\%\\\bottomrule
-\end{tabular}
-\caption{Distribución general de sentimiento en los 406 comentarios.}
-\end{table}
-
-La confianza media es 0.818. Hay 61 predicciones bajo 0.60 (15.0\%), 89 entre 0.60 y 0.80 (21.9\%) y 256 por encima de 0.80 (63.1\%). Las comparaciones por video, canal, categoría y comunidad requieren al menos cinco comentarios para considerarse interpretables.
-\figura{0.96}{../outputs/figures/sentimiento_panorama.png}{Distribución general y confianza de la clase ganadora.}
-\figura{0.78}{../outputs/figures/sentimiento_confianza.png}{Diagnóstico de confianza del modelo.}
-
-\section{Respuestas integradas}
 \begin{enumerate}
-  \item \textbf{Concentración.} El video líder es ``Qué rico come tu diputado'' y el canal líder es Quorum; los cinco videos principales concentran 75.4\%.
-  \item \textbf{Audiencias compartidas.} Existen, pero son escasas: nueve autores aparecen en más de un video y generan 11 conexiones video--video.
-  \item \textbf{Puentes.} Siete autores son articuladores reales según intermediación, corte y remoción.
-  \item \textbf{Comunidades.} Diez grupos combinan evidencia estructural y contenido; se documentan temas y sentimiento sin interpretar muestras menores que cinco.
-  \item \textbf{Articulación de videos.} Cinco videos separan segmentos de la componente compartida si se retiran.
-  \item \textbf{Remoción.} Doce de los 25 candidatos evaluados incrementan fragmentación.
-  \item \textbf{Sentimiento.} Predomina la clase negativa, pero 15.0\% de predicciones tiene baja confianza y exige cautela.
+  \item \textbf{¿Qué videos y canales concentran participación?} \emph{Qué rico come tu diputado} lidera con 161 comentarios; Quorum lidera con 256. Los cinco videos principales reúnen 75.4\%.
+  \item \textbf{¿Existen audiencias compartidas?} Sí, en el sentido limitado de coparticipación: la proyección video--video contiene 11 pares unidos por autores compartidos y la proyección autor--autor 10,732 pares.
+  \item \textbf{¿Qué autores funcionan como puentes?} En esta fase se identifican autores presentes en más de un video. La intermediación y el efecto de removerlos se calcularán en la fase final; anticiparlos solo con recuentos podría inducir conclusiones erróneas.
+  \item \textbf{¿Qué temas y sentimientos caracterizan comunidades?} Las comunidades principales se relacionan con diputados y gasto público, gobierno y país, y USAC/corrupción. El sentimiento formal se reserva para una herramienta adecuada para español.
+  \item \textbf{¿Coinciden visibilidad y participación?} No de forma general en la muestra completa: $\rho=0.080$. La asociación alta entre videos cubiertos no elimina el sesgo de selección.
+  \item \textbf{¿Qué limita las conclusiones?} Consultas de búsqueda, fechas relativas, conteos instantáneos, ausencia de respuestas identificadas, 19 videos cubiertos y concentración extrema.
 \end{enumerate}
 
-\section{Limitaciones y ética}
+Preguntas adicionales: (1) ¿qué tan recurrente es la audiencia entre videos?, respondida mediante el número de autores con más de un video; (2) ¿cuántos comentarios presentan al menos una respuesta?, sin inferir quién respondió; (3) ¿cómo se distribuye la conversación según \texttt{source\_group}?; y (4) ¿cuántos comentarios no muestran likes después de normalizar espacios? Las respuestas exactas se conservan en \texttt{preguntas\_adicionales.csv}.
+
+\section{Red bipartita autor--video}
+
+Se construyó una red no dirigida con autores y videos como tipos de nodo. Una arista existe cuando un autor comentó un video; su peso es el número de comentarios de ese autor en ese video. La arista no demuestra amistad, conversación directa, acuerdo ni aprobación.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\textwidth]{red_bipartita_completa.png}
+\caption{Red bipartita. La vista estructural muestra nodos activos y el panel conserva el conteo de aislados.}
+\label{fig:bipartita}
+\end{figure}
+
+La tabla de nodos contiene tipo, identificador y atributos relevantes. La tabla de aristas conserva origen, destino, peso y significado. Los 274 videos sin comentarios permanecen como aislados; no se eliminaron para mejorar la apariencia.
+
+\section{Proyecciones}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{proyeccion_autores.png}
+\caption{Proyección autor--autor; el peso representa videos compartidos.}
+\label{fig:autores}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{proyeccion_videos.png}
+\caption{Proyección video--video; el peso representa autores compartidos.}
+\label{fig:videos}
+\end{figure}
+
+La proyección de autores conecta a dos cuentas cuando comentaron el mismo video; aproxima copresencia en espacios de participación, no interacción. La proyección de videos conecta contenidos que comparten al menos un autor y muestra solapamiento de audiencias. Los pesos cuentan videos o autores compartidos, respectivamente.
+
+\section{Topología y fragmentación}
+
+\begin{table}[H]
+\centering
+\caption{Métricas estructurales principales.}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Red & Nodos & Aristas & Aislados & Densidad & Grado medio & Componentes & Mayor comp. & Transitividad\\
+\midrule
+Bipartita & 625 & 343 & 274 & 0.00176 & 1.10 & 284 & 286 & 0.000\\
+Autores & 332 & 10,732 & 4 & 0.19532 & 64.65 & 10 & 276 & 0.984\\
+Videos & 293 & 11 & 283 & 0.00026 & 0.08 & 284 & 10 & 0.316\\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\textwidth]{distribuciones_grado.png}
+\caption{Distribuciones de grado de las tres redes.}
+\label{fig:grado}
+\end{figure}
+
+La red bipartita es dispersa y fragmentada por la falta de comentarios para la mayoría de videos. Su transitividad es cero por construcción: un grafo estrictamente bipartito no contiene triángulos. La proyección de autores es mucho más densa y alcanza transitividad 0.984, pero esta cifra está inflada estructuralmente porque todos los autores de un mismo video forman un clique. No representa cohesión interpersonal comprobada. La proyección de videos confirma un solapamiento muy limitado: solo diez videos tienen al menos una conexión.
+
+La cohesión se midió en la componente conexa mayor mediante conectividad de nodos y de aristas. La conectividad de nodos es 1 en las tres redes: existe al menos un punto cuya remoción puede separar la componente. La conectividad de aristas es 1 en la bipartita y la proyección de videos, y 5 en la proyección de autores. Los diámetros de las componentes mayores también se conservan en \texttt{metricas\_redes.csv}.
+
+Los aislados son aislamiento \emph{observado}; no prueban desinterés o inexistencia de audiencia. Pueden reflejar que no se descargaron comentarios, que la API devolvió cobertura parcial o que el procedimiento de búsqueda no capturó actividad.
+
+\section{Comunidades}
+
+Se eligió la proyección autor--autor porque permite estudiar conjuntos de usuarios que concurren en videos semejantes. Se aplicó Louvain ponderado con semilla 42, donde el peso es el número de videos compartidos. Los cuatro aislados de la proyección se conservaron en las métricas pero se excluyeron de la optimización de modularidad porque no aportan enlaces.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{comunidades_autores.png}
+\caption{Diez comunidades de coparticipación detectadas mediante Louvain.}
+\label{fig:comunidades}
+\end{figure}
+
+La modularidad fue 0.395. La comunidad 1 reúne 126 autores y 161 comentarios, con vocabulario sobre pueblo, dinero y diputados, y sentimiento negativo (score promedio $-0.72$ sobre 59 comentarios con léxico). La comunidad 2 contiene 61 autores y 83 comentarios relacionados con presidencia, Guatemala y gobierno, con sentimiento positivo ($+0.89$). La comunidad 3 contiene 55 autores y 60 comentarios, destacando USAC, universidad y corrupción, con sentimiento levemente positivo ($+0.62$). Estas comunidades reflejan agrupación por contenidos compartidos; no son grupos sociales confirmados. El detalle de sentimiento por comunidad está en \texttt{resumen\_comunidades.csv} y se explica en la Sección~\ref{sec:sentimiento}.
+
+\section{Nodos centrales y participantes puente}
+
+Se calcularon grado, grado ponderado, intermediación (sobre distancia $=1/\text{peso}$), centralidad armónica y PageRank ponderado para autores y videos (\texttt{centralidad\_autores.csv}, \texttt{centralidad\_videos.csv}). Se usó centralidad armónica en lugar de cercanía clásica porque la red está fragmentada (10 componentes de autores, 284 de videos) y la cercanía clásica no está definida entre componentes distintos; PageRank ponderado complementa el grado descontando la centralidad heredada de vecinos muy conectados. Se descartó la centralidad de vectores propios porque, con tantos componentes, se concentra en la componente dominante y asigna cero al resto.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{centralidad_autores.png}
+\caption{Centralidad de autores (proyección autor--autor).}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{centralidad_videos.png}
+\caption{Centralidad de videos (proyección video--video).}
+\end{figure}
+
+Solo 9 de 332 autores (2.7\%) comentaron en más de un video; únicamente esos 9 tienen intermediación positiva, 7 son puntos de articulación y 4 quedan aislados por ser el único comentarista de su video. Los tres primeros por intermediación son @virgiliogarcia3039 (2 videos, intermediación 0.239), @inge\_vergueta (3 videos, 0.220) y @josegil3813 (2 videos, 0.183). En videos, 10 de 293 comparten autores; 5 son articuladores, y \emph{Qué rico come tu diputado} es el único cuya remoción parte la componente en tres.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{autores_puente.png}
+\caption{Autores puente identificados por intermediación y articulación.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{videos_articuladores.png}
+\caption{Videos articuladores de la proyección video--video.}
+\end{figure}
+
+Recurrencia (comentar en más de un video) es condición necesaria pero no suficiente para tener alta intermediación: entre los 9 autores recurrentes, la correlación de Spearman con intermediación cae a 0.208; lo decisivo es \emph{qué} videos conecta cada autor, no cuántos. Se evaluó la remoción de 25 nodos candidatos (\texttt{impacto\_remocion.csv}); 12 fragmentan la red. El caso extremo es @virgiliogarcia3039: al removerlo la componente mayor de autores cae de 276 a 214 nodos ($-22.5\%$).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{impacto_remocion.png}
+\caption{Impacto en la fragmentación al remover autores puente candidatos.}
+\end{figure}
+
+\section{Análisis de contenido y sentimiento}
+\label{sec:sentimiento}
+
+Se aplicó el modelo \texttt{pysentimiento/robertuito-sentiment-analysis}, especializado en sentimiento de texto social en español. El modelo conserva las probabilidades para las clases negativo, neutral y positivo, además de la confianza de cada predicción. Los resultados deben interpretarse como una clasificación automática descriptiva de esta muestra y no como una medición de la opinión de toda la audiencia.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{sentimiento_distribucion.png}
+\caption{Distribución de sentimiento en los comentarios analizados.}
+\end{figure}
+
+De los 406 comentarios, 82 fueron clasificados como positivos (20.2\%), 249 como negativos (61.3\%) y 75 como neutrales (18.5\%). Predomina, por tanto, el sentimiento negativo en la muestra analizada. La confianza promedio de las predicciones fue 0.818; 61 comentarios presentaron confianza menor a 0.60 y deben interpretarse con mayor cautela. Estos resultados describen los comentarios recolectados y no permiten generalizar a toda la audiencia de YouTube.
+
+\section{Limitaciones}
+
 \begin{itemize}
-  \item La cobertura de comentarios es parcial y no aleatoria: 19 de 293 videos.
-  \item Las consultas y canales usados en recolección condicionan temas y comunidades observadas.
-  \item Un canal de autor no equivale necesariamente a una persona; se evita intentar reidentificar usuarios.
-  \item Los conteos de vistas, likes y respuestas constituyen una instantánea temporal.
-  \item La copresencia no prueba interacción directa ni coordinación.
-  \item Ironía, jerga, código mixto y contexto político limitan el clasificador de sentimiento.
-  \item No se reproducen textos sensibles innecesariamente en el informe; los datos se usan con fin académico.
+  \item Solo 19 de 293 videos tienen comentarios, de modo que 274 aislados representan principalmente cobertura desigual.
+  \item La selección por consultas y canales condiciona categorías, actores y temas visibles.
+  \item \texttt{published\_time} y \texttt{published\_text} son tiempos relativos y no fechas exactas.
+  \item Visualizaciones, likes y respuestas son conteos observados durante la recolección y cambian con el tiempo.
+  \item No existen relaciones explícitas autor--autor ni datos sobre quién respondió a quién.
+  \item La alta transitividad de la proyección de autores surge en parte de la proyección de grupos que comentan un mismo video.
+  \item La concentración en pocos videos impide generalizar a todos los usuarios de YouTube o a la población de Guatemala.
 \end{itemize}
 
-\section{Conclusiones}
-La participación está concentrada, pero la conexión entre audiencias es excepcional. La mayoría de autores aparece en un solo video y casi todos los videos quedan aislados en la proyección. Los puentes identificados son valiosos no por comentar mucho, sino porque conectan camarillas que perderían continuidad al removerlos.
+Adicionalmente: solo 9 de 332 autores tienen intermediación positiva y el sentimiento se obtuvo mediante clasificación automática, por lo que las lecturas de centralidad y de sentimiento describen esta muestra acotada, no su totalidad.
 
-Las comunidades ofrecen una lectura más rica al integrar estructura, temas y sentimiento. El tono general es predominantemente negativo, aunque existe heterogeneidad importante, incluida una comunidad mayoritariamente positiva. La fuerza del análisis reside en triangular métricas y reconocer las limitaciones de cobertura; no en presentar la red o el modelo como una representación completa de YouTube Guatemala.
+Se distingue descripción de asociación e inferencia. Los conteos, la estructura de red y las proporciones de sentimiento son \textbf{descriptivos} de esta muestra. La coincidencia entre nodos de alta intermediación y videos de sentimiento más negativo es una \textbf{asociación} observada, no una relación causal probada. No se generaliza a todos los usuarios de YouTube ni a toda la población de Guatemala: la muestra fue construida por consultas específicas y cubre un periodo y conjunto de canales acotado.
 
-\section{Reproducibilidad y trazabilidad}
-El pipeline completo se ejecuta con:
-\begin{verbatim}
-python -m pip install -r requirements.txt
-python scripts/run_final.py
-python scripts/build_final_notebook.py
-cd reports
-pdflatex -interaction=nonstopmode -halt-on-error informe_final.tex
-pdflatex -interaction=nonstopmode -halt-on-error informe_final.tex
-\end{verbatim}
+\section{Interpretación y conclusiones finales}
 
-El repositorio contiene datos originales, código modular, notebook ejecutado, tablas, figuras, pruebas, fuente LaTeX y PDF. La tabla \texttt{cumplimiento\_rubrica\_final.csv} enlaza los nueve criterios de calificación con evidencia concreta, y \texttt{evidencia\_ejercicios.csv} hace lo propio con los diez ejercicios.
+La participación observada está altamente concentrada (Sección~4.1) y la estructura de redes confirma ese patrón: la red autor--video es un conjunto de camarillas por video, unidas por muy pocos autores puente (9 de 332), y el sentimiento negativo se concentra precisamente en el video que actúa como articulador estructural, \emph{Qué rico come tu diputado}. Esto es consistente con una dinámica típica de YouTube en contenido político: pocos videos concentran participación, visibilidad y polarización, mientras el resto del corpus queda fragmentado y mayormente aislado. El contenido institucional/gubernamental, cuando recibe comentarios, tiende a ser más positivo.
 
-\noindent Repositorio: \href{https://github.com/DanielBarillasM/Laboratorio-6.-Analitica-de-Redes-Sociales_Grupo-1_DS_Sec-10.git}{GitHub · Laboratorio 6 · Grupo 1}
+La red revela \emph{quién} conecta qué contenidos; el análisis de sentimiento revela \emph{qué tono} domina esas conexiones. Ambas lecturas están acotadas por una cobertura parcial de comentarios, un muestreo por consultas y una identificación de sentimiento con cobertura del 36.9\% del corpus. Las conclusiones se limitan a esta muestra observada y no a la totalidad de la conversación pública en YouTube sobre estos temas ni a la población general de Guatemala.
 
-\section*{Referencias metodológicas}
-\begin{itemize}
-  \item Hagberg, A., Swart, P. y Schult, D. \emph{Exploring network structure, dynamics, and function using NetworkX}.
-  \item Blondel, V. et al. (2008). \emph{Fast unfolding of communities in large networks}.
-  \item Pérez, J. M. et al. RoBERTuito y \href{https://github.com/pysentimiento/pysentimiento}{pysentimiento}: análisis de sentimiento en español.
-\end{itemize}
+\section{Reproducibilidad}
+
+El flujo se ejecuta en tres pasos: \texttt{python scripts/run\_advance.py} (ejercicios 1--4 y parte de 5--7), \texttt{python scripts/run\_network\_final.py} (proyecciones, topología, comunidades y ejercicio 8 de centralidad/puentes) y \texttt{python scripts/run\_sentiment.py} (ejercicio 9 de sentimiento). El notebook se reconstruye con \texttt{python scripts/build\_notebook.py}. Las tablas y figuras se generan automáticamente en \texttt{outputs/}. El cargador acepta CSV real y libros Excel aunque la extensión sea incorrecta. La suite automatizada (\texttt{pytest tests -q}) valida lectura, reparación de IDs, conteos, limpieza y significado de pesos. Código, dependencias e instrucciones están disponibles en \repo.
+
+\begin{thebibliography}{9}
+\bibitem{networkx} Hagberg, A., Schult, D. y Swart, P. (2008). \emph{Exploring network structure, dynamics, and function using NetworkX}. Proceedings of SciPy.
+\bibitem{louvain} Blondel, V., Guillaume, J., Lambiotte, R. y Lefebvre, E. (2008). \emph{Fast unfolding of communities in large networks}. Journal of Statistical Mechanics.
+\bibitem{centrality} Freeman, L. (1979). \emph{Centrality in social networks: Conceptual clarification}. Social Networks, 1(3), 215--239.
+\end{thebibliography}
 
 \end{document}
