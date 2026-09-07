@@ -26,7 +26,7 @@
   "comunidades": {
     "algoritmo": "Louvain ponderado",
     "total": 10,
-    "modularidad": 0.3949028012418394,
+    "modularidad": 0.39490280124183946,
     "dependientes_de_pocos_nodos": 6
   }
 }
