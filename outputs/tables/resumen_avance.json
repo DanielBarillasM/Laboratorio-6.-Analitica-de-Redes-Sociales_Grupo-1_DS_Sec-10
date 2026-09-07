@@ -60,7 +60,7 @@
       "componente_mayor": 276,
       "componente_mayor_pct": 83.13253012048193,
       "transitividad": 0.9840254741148836,
-      "clustering_medio": 0.48624048834986683,
+      "clustering_medio": 0.4862404883498666,
       "cohesion_nodos_lcc": 1,
       "cohesion_aristas_lcc": 5,
       "diametro_lcc": 6
@@ -79,7 +79,7 @@
       "componente_mayor": 10,
       "componente_mayor_pct": 3.4129692832764507,
       "transitividad": 0.3157894736842105,
-      "clustering_medio": 0.006091768443746541,
+      "clustering_medio": 0.006091768443746542,
       "cohesion_nodos_lcc": 1,
       "cohesion_aristas_lcc": 1,
       "diametro_lcc": 5
@@ -88,7 +88,7 @@
   "communities": {
     "algorithm": "Louvain ponderado",
     "count": 10,
-    "modularity": 0.39490280124183946
+    "modularity": 0.3949028012418394
   },
   "scope_points": 74,
   "scope_total": 100

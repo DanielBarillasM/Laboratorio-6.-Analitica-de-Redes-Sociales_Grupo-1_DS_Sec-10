@@ -22,6 +22,7 @@
 
 \begin{document}
 
+\hypersetup{pageanchor=false}
 \begin{titlepage}
 \pagecolor{navy}\color{white}
 \centering
@@ -48,25 +49,27 @@ Roberto Emiliano Otoniel & 23968\\
 {\large Segundo semestre de 2026\par}
 \end{titlepage}
 \nopagecolor\color{black}
+\hypersetup{pageanchor=true}
+\pagenumbering{arabic}
 
 \tableofcontents
 \newpage
 
 \section{Resumen ejecutivo}
 
-Se analizaron 293 videos, 97 canales, 406 comentarios y 332 autores de una muestra obtenida de YouTube. El flujo reproducible carga archivos CSV o Excel, normaliza identificadores, limpia texto en español, integra las dos tablas, describe participación y construye la red autor--video, sus proyecciones autor--autor y video--video, métricas topológicas, comunidades (Louvain ponderado), centralidades, participantes puente/articuladores y análisis de sentimiento léxico en español. Este documento cierra los diez ejercicios del laboratorio.
+Se analizaron 293 videos, 97 canales, 406 comentarios y 332 autores de una muestra obtenida de YouTube. El flujo reproducible carga archivos CSV o Excel, normaliza identificadores, limpia texto en español, integra las dos tablas, describe participación y construye la red autor--video, sus proyecciones autor--autor y video--video, métricas topológicas, comunidades (Louvain ponderado), centralidades, participantes puente/articuladores y análisis de sentimiento con RoBERTuito. Este documento cierra los diez ejercicios del laboratorio.
 
 El 100\% de los comentarios se asoció con un video. La participación está fuertemente concentrada: el video \emph{Qué rico come tu diputado} contiene 161 comentarios (39.7\% del total), los cinco videos principales reúnen 75.4\%, y el canal Quorum concentra 256 comentarios (63.1\%). La red bipartita completa contiene 625 nodos y 343 aristas; conserva 274 videos aislados para representar la cobertura real. La proyección de autores presenta una componente principal con 83.1\% de los autores y diez comunidades con modularidad 0.395.
 
-El avance cubre 74 de 100 puntos trazables de la rúbrica. La centralidad avanzada, el sentimiento formal en español, el análisis de nodos articuladores y la síntesis final se reservan para la siguiente entrega.
+La entrega final cubre los diez ejercicios y los 100 puntos trazables de la rúbrica. Cada criterio cuenta con evidencia reproducible en el notebook, las tablas, las figuras y este informe.
 
-\section{Alcance del avance}
+\section{Alcance de la entrega final}
 
-El PDF define como avance mínimo los ejercicios 1 al 4. Para aproximarse al 75\% solicitado se completaron además las proyecciones, la topología y la detección de comunidades. La caracterización temática de comunidades está incluida; su dimensión de sentimiento queda pendiente para emplear una herramienta validada para español.
+El trabajo comprende calidad y preprocesamiento, análisis exploratorio, construcción de la red bipartita, proyecciones, topología, comunidades, centralidades, participantes puente, análisis de contenido y sentimiento, interpretación y conclusiones. La tabla resume la correspondencia entre la rúbrica y la evidencia producida.
 
 \begin{table}[H]
 \centering
-\caption{Cobertura planificada de la rúbrica.}
+\caption{Cobertura final de la rúbrica.}
 \begin{tabular}{p{0.53\textwidth}rrl}
 \toprule
 Criterio & Total & Cubierto & Estado\\
@@ -76,12 +79,12 @@ Análisis exploratorio & 18 & 18 & Completo\\
 Red bipartita autor--video & 10 & 10 & Completo\\
 Proyecciones & 8 & 8 & Completo\\
 Topología y fragmentación & 12 & 12 & Completo\\
-Comunidades & 10 & 8 & Falta sentimiento\\
-Centralidad y participantes puente & 7 & 0 & Fase final\\
-Contenido y sentimiento & 5 & 0 & Fase final\\
-Interpretación y conclusiones finales & 12 & 0 & Fase final\\
+Comunidades & 10 & 10 & Completo\\
+Centralidad y participantes puente & 7 & 7 & Completo\\
+Contenido y sentimiento & 5 & 5 & Completo\\
+Interpretación y conclusiones finales & 12 & 12 & Completo\\
 \midrule
-Total & 100 & 74 & Avance aproximado 75\%\\
+Total & 100 & 100 & Entrega final\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -188,8 +191,8 @@ En los 293 videos, Spearman produce $\rho=0.080$ ($p=0.170$), asociación débil
 \begin{enumerate}
   \item \textbf{¿Qué videos y canales concentran participación?} \emph{Qué rico come tu diputado} lidera con 161 comentarios; Quorum lidera con 256. Los cinco videos principales reúnen 75.4\%.
   \item \textbf{¿Existen audiencias compartidas?} Sí, en el sentido limitado de coparticipación: la proyección video--video contiene 11 pares unidos por autores compartidos y la proyección autor--autor 10,732 pares.
-  \item \textbf{¿Qué autores funcionan como puentes?} En esta fase se identifican autores presentes en más de un video. La intermediación y el efecto de removerlos se calcularán en la fase final; anticiparlos solo con recuentos podría inducir conclusiones erróneas.
-  \item \textbf{¿Qué temas y sentimientos caracterizan comunidades?} Las comunidades principales se relacionan con diputados y gasto público, gobierno y país, y USAC/corrupción. El sentimiento formal se reserva para una herramienta adecuada para español.
+  \item \textbf{¿Qué autores funcionan como puentes?} Nueve autores participaron en más de un video, siete son puntos de articulación y 12 de los 25 nodos candidatos evaluados fragmentan la red al removerse. @virgiliogarcia3039 produce el mayor cambio: la componente principal de autores cae 22.5\%.
+  \item \textbf{¿Qué temas y sentimientos caracterizan comunidades?} Las comunidades principales se relacionan con diputados y gasto público, gobierno y país, y USAC/corrupción. RoBERTuito clasifica como negativo el 61.3\% del corpus; la distribución por comunidad se reporta con un mínimo de cinco comentarios.
   \item \textbf{¿Coinciden visibilidad y participación?} No de forma general en la muestra completa: $\rho=0.080$. La asociación alta entre videos cubiertos no elimina el sesgo de selección.
   \item \textbf{¿Qué limita las conclusiones?} Consultas de búsqueda, fechas relativas, conteos instantáneos, ausencia de respuestas identificadas, 19 videos cubiertos y concentración extrema.
 \end{enumerate}
@@ -268,7 +271,7 @@ Se eligió la proyección autor--autor porque permite estudiar conjuntos de usua
 \label{fig:comunidades}
 \end{figure}
 
-La modularidad fue 0.395. La comunidad 1 reúne 126 autores y 161 comentarios, con vocabulario sobre pueblo, dinero y diputados, y sentimiento negativo (score promedio $-0.72$ sobre 59 comentarios con léxico). La comunidad 2 contiene 61 autores y 83 comentarios relacionados con presidencia, Guatemala y gobierno, con sentimiento positivo ($+0.89$). La comunidad 3 contiene 55 autores y 60 comentarios, destacando USAC, universidad y corrupción, con sentimiento levemente positivo ($+0.62$). Estas comunidades reflejan agrupación por contenidos compartidos; no son grupos sociales confirmados. El detalle de sentimiento por comunidad está en \texttt{resumen\_comunidades.csv} y se explica en la Sección~\ref{sec:sentimiento}.
+La modularidad fue 0.395. La comunidad 1 reúne 126 autores y 161 comentarios, con vocabulario sobre pueblo, dinero y diputados; RoBERTuito clasificó 80.7\% de sus comentarios como negativos. La comunidad 2 contiene 61 autores y 83 comentarios relacionados con presidencia, Guatemala y gobierno: 44.6\% fueron negativos, 27.7\% neutrales y 27.7\% positivos. La comunidad 3 contiene 55 autores y 60 comentarios, destacando USAC, universidad y corrupción: 61.7\% fueron negativos, 18.3\% neutrales y 20.0\% positivos. Estas comunidades reflejan agrupación por contenidos compartidos; no son grupos sociales confirmados. El detalle de sentimiento por comunidad está en \texttt{sentimiento\_por\_comunidad.csv} y se explica en la Sección~\ref{sec:sentimiento}.
 
 \section{Nodos centrales y participantes puente}
 
@@ -315,8 +318,8 @@ Se aplicó el modelo \texttt{pysentimiento/robertuito-sentiment-analysis}, espec
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{sentimiento_distribucion.png}
-\caption{Distribución de sentimiento en los comentarios analizados.}
+\includegraphics[width=0.98\textwidth]{sentimiento_panorama.png}
+\caption{Distribución y confianza del modelo de sentimiento en los comentarios analizados.}
 \end{figure}
 
 De los 406 comentarios, 82 fueron clasificados como positivos (20.2\%), 249 como negativos (61.3\%) y 75 como neutrales (18.5\%). Predomina, por tanto, el sentimiento negativo en la muestra analizada. La confianza promedio de las predicciones fue 0.818; 61 comentarios presentaron confianza menor a 0.60 y deben interpretarse con mayor cautela. Estos resultados describen los comentarios recolectados y no permiten generalizar a toda la audiencia de YouTube.
@@ -339,18 +342,19 @@ Se distingue descripción de asociación e inferencia. Los conteos, la estructur
 
 \section{Interpretación y conclusiones finales}
 
-La participación observada está altamente concentrada (Sección~4.1) y la estructura de redes confirma ese patrón: la red autor--video es un conjunto de camarillas por video, unidas por muy pocos autores puente (9 de 332), y el sentimiento negativo se concentra precisamente en el video que actúa como articulador estructural, \emph{Qué rico come tu diputado}. Esto es consistente con una dinámica típica de YouTube en contenido político: pocos videos concentran participación, visibilidad y polarización, mientras el resto del corpus queda fragmentado y mayormente aislado. El contenido institucional/gubernamental, cuando recibe comentarios, tiende a ser más positivo.
+La participación observada está altamente concentrada y la estructura de redes confirma ese patrón: la red autor--video forma grupos por video unidos por muy pocos autores puente (9 de 332), y el sentimiento negativo se concentra precisamente en el video que actúa como articulador estructural, \emph{Qué rico come tu diputado}. En este corpus específico, pocos videos concentran participación y visibilidad, mientras el resto queda fragmentado y mayormente aislado. Las diferencias de sentimiento entre contenidos son asociaciones descriptivas de la muestra y no evidencian causalidad ni un patrón general de YouTube.
 
-La red revela \emph{quién} conecta qué contenidos; el análisis de sentimiento revela \emph{qué tono} domina esas conexiones. Ambas lecturas están acotadas por una cobertura parcial de comentarios, un muestreo por consultas y una identificación de sentimiento con cobertura del 36.9\% del corpus. Las conclusiones se limitan a esta muestra observada y no a la totalidad de la conversación pública en YouTube sobre estos temas ni a la población general de Guatemala.
+La red revela \emph{quién} conecta qué contenidos; el análisis de sentimiento revela \emph{qué tono} domina esas conexiones. El modelo procesó los 406 comentarios (100\% del corpus); 61 predicciones con confianza menor a 0.60 requieren especial cautela. Ambas lecturas siguen acotadas por una cobertura parcial de videos y un muestreo por consultas. Las conclusiones se limitan a esta muestra observada y no a la totalidad de la conversación pública en YouTube sobre estos temas ni a la población general de Guatemala.
 
 \section{Reproducibilidad}
 
-El flujo se ejecuta en tres pasos: \texttt{python scripts/run\_advance.py} (ejercicios 1--4 y parte de 5--7), \texttt{python scripts/run\_network\_final.py} (proyecciones, topología, comunidades y ejercicio 8 de centralidad/puentes) y \texttt{python scripts/run\_sentiment.py} (ejercicio 9 de sentimiento). El notebook se reconstruye con \texttt{python scripts/build\_notebook.py}. Las tablas y figuras se generan automáticamente en \texttt{outputs/}. El cargador acepta CSV real y libros Excel aunque la extensión sea incorrecta. La suite automatizada (\texttt{pytest tests -q}) valida lectura, reparación de IDs, conteos, limpieza y significado de pesos. Código, dependencias e instrucciones están disponibles en \repo.
+El flujo completo se ejecuta con \texttt{python scripts/run\_final.py}; este comando genera las tablas, figuras, redes, centralidades, experimentos de remoción y resultados de sentimiento en \texttt{outputs/}. El notebook final se reconstruye con \texttt{python scripts/build\_final\_notebook.py} y, al usar \emph{Run All}, vuelve a ejecutar el mismo pipeline antes de presentar los resultados. El cargador acepta CSV real y libros Excel aunque la extensión sea incorrecta. La auditoría se ejecuta con \texttt{python scripts/audit\_final.py} y la suite de 40 pruebas con \texttt{python -m pytest -q}. Código, dependencias e instrucciones están disponibles en \repo.
 
 \begin{thebibliography}{9}
 \bibitem{networkx} Hagberg, A., Schult, D. y Swart, P. (2008). \emph{Exploring network structure, dynamics, and function using NetworkX}. Proceedings of SciPy.
 \bibitem{louvain} Blondel, V., Guillaume, J., Lambiotte, R. y Lefebvre, E. (2008). \emph{Fast unfolding of communities in large networks}. Journal of Statistical Mechanics.
 \bibitem{centrality} Freeman, L. (1979). \emph{Centrality in social networks: Conceptual clarification}. Social Networks, 1(3), 215--239.
+\bibitem{robertuito} Pérez, J. M., Giudici, J. C. y Luque, F. (2021). \emph{pysentimiento: A Python Toolkit for Sentiment Analysis and SocialNLP Tasks}. arXiv:2106.09462. Modelo: \url{https://huggingface.co/pysentimiento/robertuito-sentiment-analysis}.
 \end{thebibliography}
 
 \end{document}

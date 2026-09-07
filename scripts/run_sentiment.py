@@ -46,6 +46,9 @@ def main() -> None:
         merged = merged.merge(
             membership[["author_channel_id", "community"]], on="author_channel_id", how="left"
         )
+        # Los cuatro autores aislados no participan en Louvain, pero deben
+        # conservarse de forma explícita en vez de convertirse en valores NaN.
+        merged["community"] = merged["community"].fillna(0).astype(int)
 
     out_cols = [
         "comment_id", "video_id", "author_channel_id", "channel_id", "channel_name",
@@ -57,14 +60,14 @@ def main() -> None:
         out_cols.append("community")
     merged[out_cols].to_csv(TABLES / "sentimiento_comentarios.csv", index=False)
 
-    by_video = aggregate_sentiment(merged, ["title"], min_n=3)
+    by_video = aggregate_sentiment(merged, ["title"], min_n=5)
     by_video.to_csv(TABLES / "sentimiento_por_video.csv", index=False)
 
-    by_channel = aggregate_sentiment(merged, ["channel_name"], min_n=3)
+    by_channel = aggregate_sentiment(merged, ["channel_name"], min_n=5)
     by_channel.to_csv(TABLES / "sentimiento_por_canal.csv", index=False)
 
     if "community" in merged.columns:
-        by_community = aggregate_sentiment(merged, "community", min_n=3)
+        by_community = aggregate_sentiment(merged, "community", min_n=5)
         by_community.to_csv(TABLES / "sentimiento_por_comunidad.csv", index=False)
 
         # Completa la columna "sentimiento" (placeholder del ejercicio 7) en
@@ -79,9 +82,9 @@ def main() -> None:
                 try:
                     cid = int(float(community_id))
                 except (TypeError, ValueError):
-                    return "Sin comentarios con lexico de sentimiento"
+                    return "Sin muestra mínima para el modelo de sentimiento"
                 if cid not in scores.index:
-                    return "Sin comentarios con lexico de sentimiento"
+                    return "Sin muestra mínima para el modelo de sentimiento"
                 tag = scores[cid]
                 return f"sentimiento dominante {tag} sobre {int(counts[cid])} comentarios"
 
@@ -105,7 +108,7 @@ def main() -> None:
     con_sentimiento["sentimiento"].value_counts().reindex(
         ["positivo", "neutral", "negativo"]
     ).plot(kind="bar", ax=ax, color=["#16A34A", "#94A3B8", "#DC2626"])
-    ax.set_title("Distribución de sentimiento en comentarios (con léxico)")
+    ax.set_title("Distribución de sentimiento en comentarios (RoBERTuito)")
     ax.set_xlabel("Etiqueta")
     ax.set_ylabel("Comentarios")
     fig.tight_layout()

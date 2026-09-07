@@ -126,7 +126,7 @@ def main() -> None:
         {"variable": "reply_count", "tratamiento": "Conteo descriptivo", "justificacion": "No identifica autores de respuestas y no genera aristas."},
         {"variable": "source_query", "tratamiento": "Variable de muestreo", "justificacion": "Explica recolección, no necesariamente el tema definitivo."},
         {"variable": "nombres/handles", "tratamiento": "Solo etiquetas", "justificacion": "Los nodos se identifican mediante IDs estables."},
-        {"variable": "lematización", "tratamiento": "No aplicada en el avance", "justificacion": "Sin un modelo morfosintáctico español validado puede deformar nombres y términos; se evalúa para la fase final."},
+        {"variable": "lematización", "tratamiento": "No aplicada", "justificacion": "Sin un modelo morfosintáctico español validado podría deformar nombres y términos del corpus; se conserva esta decisión como limitación metodológica."},
         {"variable": "emojis", "tratamiento": "Retirados de texto_limpio, conservados en texto_original", "justificacion": "Se preservan para sentimiento en la fase final."},
     ])
     treatment.to_csv(TABLES / "tratamiento_variables.csv", index=False, encoding="utf-8-sig")

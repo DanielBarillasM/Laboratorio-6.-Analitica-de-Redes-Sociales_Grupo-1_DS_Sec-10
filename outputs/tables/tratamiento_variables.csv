@@ -5,5 +5,5 @@ published_time/published_text,Describir con cautela,Tiempo relativo dependiente 
 reply_count,Conteo descriptivo,No identifica autores de respuestas y no genera aristas.
 source_query,Variable de muestreo,"Explica recolección, no necesariamente el tema definitivo."
 nombres/handles,Solo etiquetas,Los nodos se identifican mediante IDs estables.
-lematización,No aplicada en el avance,Sin un modelo morfosintáctico español validado puede deformar nombres y términos; se evalúa para la fase final.
+lematización,No aplicada,Sin un modelo morfosintáctico español validado podría deformar nombres y términos del corpus; se conserva esta decisión como limitación metodológica.
 emojis,"Retirados de texto_limpio, conservados en texto_original",Se preservan para sentimiento en la fase final.
