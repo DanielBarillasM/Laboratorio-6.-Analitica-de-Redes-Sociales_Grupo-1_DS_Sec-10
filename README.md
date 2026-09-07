@@ -2,102 +2,152 @@
 
 # Laboratorio 6 · Analítica de Redes Sociales
 
-### Participación, comunidades, puentes y sentimiento en YouTube
+### Participación, copresencia y comunidades en una muestra de YouTube
 
 **CC3084 · Data Science · Sección 10 · Grupo 1**<br>
 Universidad del Valle de Guatemala · Segundo semestre 2026
 
 ![Python](https://img.shields.io/badge/Python-3.11%2B-2563EB?style=flat-square&logo=python&logoColor=white)
-![Estado](https://img.shields.io/badge/estado-entrega%20final-0F9D91?style=flat-square)
-![Rúbrica](https://img.shields.io/badge/cobertura-100%2F100-16A34A?style=flat-square)
-![Tests](https://img.shields.io/badge/tests-40%20passed-16A34A?style=flat-square)
+![Avance](https://img.shields.io/badge/avance-100%2F100-0F9D91?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-12%20passed-16A34A?style=flat-square)
+![Reproducible](https://img.shields.io/badge/análisis-reproducible-F59E0B?style=flat-square)
 
 </div>
 
 ---
 
-## Resultado
+## Propósito
 
-Este repositorio contiene la entrega final reproducible del Laboratorio 6. Integra calidad de datos, exploración, red bipartita autor–video, proyecciones, topología, comunidades, centralidades, experimentos de remoción y sentimiento en español.
+Este repositorio contiene el avance reproducible del Laboratorio 6. Estudia cómo se concentra la participación en una muestra de YouTube y cómo se conectan autores, videos, canales y temas mediante redes bipartitas, proyecciones y comunidades.
+
+El PDF define como avance mínimo las actividades 1–4; este repositorio los cubre y va más allá: los **10 ejercicios están completos** (proyecciones, topología, comunidades, centralidad/participantes puente, sentimiento e interpretación final). Ver [`docs/HANDOFF_REDES_FINALES.md`](docs/HANDOFF_REDES_FINALES.md) (ejercicios 7–8) y [`docs/HANDOFF_SENTIMIENTO_Y_CONCLUSIONES.md`](docs/HANDOFF_SENTIMIENTO_Y_CONCLUSIONES.md) (ejercicios 9–10) para el detalle metodológico agregado tras el avance del 74/100.
+
+## Resultados principales
 
 | Indicador | Resultado |
 |---|---:|
-| Videos / canales | 293 / 97 |
-| Comentarios / autores | 406 / 332 |
-| Integración comentario–video | 100 % |
-| Videos con comentarios | 19 de 293 |
-| Autores recurrentes | 9 |
-| Autores puente estructurales | 7 |
-| Videos articuladores | 5 |
-| Comunidades / modularidad | 10 / 0.395 |
-| Sentimiento NEG / NEU / POS | 61.3 % / 18.5 % / 20.2 % |
-| Confianza media del modelo | 0.818 |
+| Videos | 293 |
+| Canales | 97 |
+| Comentarios | 406 |
+| Autores | 332 |
+| Comentarios integrados | 100 % |
+| Nodos de la red bipartita | 625 |
+| Aristas autor–video | 343 |
+| Comunidades de autores | 10 |
+| Modularidad | 0.395 |
+| Participación reunida por los cinco videos principales | 75.4 % |
 
-> Una arista representa coparticipación observada, no amistad, respuesta, aprobación ni coordinación. `reply_count` no identifica autores de respuesta y no se usa para inventar conexiones.
+> Una arista autor–video significa que el autor comentó ese video. No representa amistad, respuesta directa, aprobación ni coordinación.
 
-## Entrega principal
+## Entregables del avance
 
-- [Notebook final ejecutado](notebooks/Lab6_Analitica_Redes_Sociales.ipynb)
-- [Informe final en PDF](reports/informe_final.pdf)
-- [Fuente LaTeX](reports/informe_final.tex)
-- [Ficha del repositorio](entrega/Ficha_Repositorio_Laboratorio_6.pdf)
-- [Auditoría de la rúbrica](outputs/tables/cumplimiento_rubrica_final.csv)
-- [Evidencia por ejercicio](outputs/tables/evidencia_ejercicios.csv)
+- [Notebook final ejecutado (ejercicios 1–10)](notebooks/Lab6_Final_100.ipynb)
+- [Notebook del avance](notebooks/Lab6_Avance_75.ipynb)
+- [Informe final completo (PDF, ejercicios 1–10)](reports/informe_final.pdf)
+- [Fuente LaTeX del informe final](reports/informe_final.tex)
+- [Informe del avance (PDF, ejercicios 1–4)](reports/informe_avance_75.pdf)
+- [Fuente LaTeX del avance](reports/informe_avance_75.tex)
+- [Script del avance (ejercicios 1–4)](scripts/run_advance.py)
+- [Script de redes finales (ejercicios 5–8)](scripts/run_network_final.py)
+- [Script de sentimiento (ejercicio 9)](scripts/run_sentiment.py)
+- [Tablas de resultados](outputs/tables)
+- [Visualizaciones](outputs/figures)
+- [Código reutilizable](src/lab6_social)
+- [Pruebas automatizadas](tests)
 
-## Reproducción completa
+## Datos proporcionados y carga robusta
+
+`Data/youtube_videos.csv` y `Data/youtube_comments.csv` son los archivos CSV originales indicados por la guía. Contienen, respectivamente, 293 videos con 20 variables y 406 comentarios con 17 variables. Los identificadores principales están completos y no fue necesario reconstruirlos.
+
+Para mantener la reproducibilidad ante distintas formas de descarga, el cargador inspecciona la firma binaria y acepta:
+
+- CSV real en UTF-8, UTF-8 con BOM, Windows-1252 o Latin-1;
+- archivos `.xlsx` normales;
+- libros Excel descargados con extensión `.csv`.
+
+La tabla `outputs/tables/video_ids_recuperados.csv` conserva la estructura de auditoría y queda sin registros porque los CSV auténticos contienen los 293 `video_id`. La rutina de recuperación desde `video_url` se conserva como validación defensiva para futuras exportaciones.
+
+## Ejecución
+
+### 1. Crear el entorno
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-python scripts/run_final.py
-python scripts/build_final_notebook.py
-python -m pytest -q
 ```
 
-También puede usarse `uv sync --extra test`. El notebook ejecuta `scripts/run_final.py` en su primera celda, así que **Run All** reconstruye el análisis antes de mostrarlo.
-
-La primera inferencia descarga `pysentimiento/robertuito-sentiment-analysis`. Después se reutiliza `sentimiento_predicciones_cache.csv` únicamente si coinciden modelo, IDs y huellas de los textos. Para repetir la inferencia:
+También puede utilizarse `uv`:
 
 ```powershell
-$env:LAB6_FORCE_SENTIMENT = "1"
-python scripts/run_final.py
+uv sync --extra test
 ```
 
-## Metodología
+### 2. Generar el análisis
 
-- Carga robusta de CSV/XLSX basada en firma de archivo.
-- IDs estables para nodos; nombres y handles solo como etiquetas.
-- Texto limpio para frecuencias y texto original para sentimiento.
-- Videos sin comentarios conservados como nodos aislados.
-- Proyecciones ponderadas por participación compartida.
-- Louvain ponderado con semilla fija 42.
-- Grado, grado ponderado, intermediación, cercanía armónica y PageRank.
-- Puentes verificados mediante puntos de articulación y remoción.
-- Sentimiento NEG/NEU/POS con probabilidades, confianza y muestra mínima `n ≥ 5`.
+```powershell
+python scripts/run_advance.py
+```
 
-El modelo empleado es [RoBERTuito para análisis de sentimiento](https://huggingface.co/pysentimiento/robertuito-sentiment-analysis), diseñado para texto social en español. Sus etiquetas siguen siendo predicciones: ironía, jerga y contexto pueden causar errores.
+El script localiza automáticamente los archivos cuyo nombre contiene `videos` y `comments` dentro de `/Data`.
+
+### 3. Ejecutar directamente desde el notebook
+
+Abra `notebooks/Lab6_Avance_75.ipynb` y seleccione **Run All / Ejecutar todo**. La primera celda ejecuta el pipeline completo y regenera automáticamente las tablas y figuras antes de mostrar los resultados.
+
+El notebook debe mantenerse dentro del repositorio porque utiliza `/Data`, `/src` y `/scripts` para evitar duplicar la implementación.
+
+### 4. Reconstruir el archivo del notebook
+
+```powershell
+python scripts/build_notebook.py
+```
+
+### 5. Compilar el informe
+
+```powershell
+cd reports
+pdflatex -interaction=nonstopmode -halt-on-error informe_avance_75.tex
+pdflatex -interaction=nonstopmode -halt-on-error informe_avance_75.tex
+```
+
+### 6. Ejecutar pruebas
+
+```powershell
+python -m pytest -q
+```
 
 ## Estructura
 
 ```text
-├── Data/                  # CSV originales y datos normalizados
-├── Instructions/          # PDF oficial
-├── config/                # Curso, equipo y parámetros
-├── entrega/               # Ficha DOCX/PDF del repositorio
-├── notebooks/             # Notebook narrativo final
+├── Data/                   # Datos originales proporcionados
+├── Instructions/           # PDF oficial
+├── config/                 # Metadatos del curso y equipo
+├── data/processed/         # Resultados intermedios reconstruibles
+├── entrega/                # ficha de presentación al repositorio oficial en Github
+├── notebooks/              # Notebook narrativo ejecutado
 ├── outputs/
-│   ├── figures/           # EDA, redes, remoción y sentimiento
-│   └── tables/            # Evidencia auditable y resultados
-├── reports/               # Informe final TeX/PDF
-├── scripts/               # Pipelines y constructores
-├── src/lab6_social/       # Implementación modular
-└── tests/                 # 40 pruebas automatizadas
+│   ├── figures/            # EDA y visualizaciones de redes
+│   └── tables/             # Calidad, métricas, nodos y aristas
+├── reports/                # Informe TeX y PDF
+├── scripts/                # Flujo y generador del notebook
+├── src/lab6_social/        # Carga, limpieza, análisis y redes
+└── tests/                  # Validación automatizada
 ```
 
-## Limitaciones
+## Decisiones metodológicas
 
-Solo 19 de 293 videos tienen comentarios. La muestra depende de las consultas y del momento de recolección; vistas, likes y respuestas cambian con el tiempo. Un canal no equivale necesariamente a una persona. Los resultados caracterizan este corpus y no representan a toda la audiencia de YouTube ni a la población guatemalteca.
+- Los nodos se identifican con IDs estables; nombres y handles son etiquetas.
+- Se conservan `texto_original` y `texto_limpio`.
+- Los videos sin comentarios permanecen como nodos aislados.
+- `reply_count` no genera conexiones entre usuarios porque no identifica quién respondió.
+- La proyección autor–autor representa copresencia en videos, no relaciones sociales explícitas.
+- Louvain usa como peso la cantidad de videos compartidos y una semilla fija de 42.
+- El sentimiento formal se reserva para una herramienta validada para español en la fase final.
+
+## Limitaciones esenciales
+
+Solo 19 de 293 videos tienen comentarios. La muestra depende de consultas y canales utilizados durante la recolección; visualizaciones, likes y respuestas son conteos observados en un momento específico. Por ello, los resultados no deben generalizarse a todos los usuarios de YouTube ni a la población de Guatemala.
 
 ## Equipo
 
