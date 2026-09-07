@@ -1,0 +1,26 @@
+﻿red,node,node_id,node_type,label,grado,aristas_eliminadas,componentes_antes,componentes_despues,componentes_nuevos,componente_mayor_antes,componente_mayor_despues,cambio_componente_mayor_pct,fragmentacion_antes,fragmentacion_despues,incremento_fragmentacion,es_punto_articulacion
+proyeccion_autores,author::UCHTGCgY2l-DQJIvlA_cpa_Q,UCHTGCgY2l-DQJIvlA_cpa_Q,author,@virgiliogarcia3039,145,145,10,11,1,276,214,-22.463768115942027,0.30169367389911195,0.540712258537032,0.23901858463792003,True
+proyeccion_autores,author::UCzZ6dDCEsLMXbc5pCFXIprw,UCzZ6dDCEsLMXbc5pCFXIprw,author,@josegil3813,49,49,10,11,1,276,232,-15.942028985507246,0.30169367389911195,0.4843541151698252,0.18266044127071324,True
+proyeccion_autores,author::UCpsKOkt5iWTbenzeuq7dsmQ,UCpsKOkt5iWTbenzeuq7dsmQ,author,@inge_vergueta,183,183,10,11,1,276,247,-10.507246376811594,0.30169367389911195,0.4283255515883915,0.12663187768927953,True
+proyeccion_autores,author::UCjZgFEowMBrsjodqfovzdKw,UCjZgFEowMBrsjodqfovzdKw,author,@franciscoflores3120,43,43,10,11,1,276,263,-4.7101449275362315,0.30169367389911195,0.3594799963380024,0.05778632243889048,True
+proyeccion_autores,author::UCdFlugHJJa4l3YqWuNRmvXw,UCdFlugHJJa4l3YqWuNRmvXw,author,@MarcosCarillo-b1r,54,54,10,11,1,276,269,-2.536231884057971,0.30169367389911195,0.3312459946901034,0.02955232079099146,True
+proyeccion_autores,author::UCsUCN0Yq_UyTvKjOJLmNrnQ,UCsUCN0Yq_UyTvKjOJLmNrnQ,author,@moisesvaldez4043,133,133,10,11,1,276,269,-2.536231884057971,0.30169367389911195,0.3312459946901034,0.02955232079099146,True
+proyeccion_autores,author::UCvcu1kR8xMYy_I1Ty-2mV2Q,UCvcu1kR8xMYy_I1Ty-2mV2Q,author,@hashojea7348,28,28,10,11,1,276,270,-2.1739130434782608,0.30169367389911195,0.3264121578320974,0.02471848393298548,True
+proyeccion_videos,video::n8iP75gIpmw,n8iP75gIpmw,video,Qué rico come tu diputado,4,4,284,286,2,10,5,-50.0,0.9991526620533823,0.9996940168526103,0.000541354799228011,True
+proyeccion_videos,video::PjmxCj-a9Hg,PjmxCj-a9Hg,video,Conferencia de Prensa del Gobierno de Guatemala. #LaRondaGt,2,2,284,285,1,10,7,-30.0,0.9991526620533823,0.9994821823659559,0.0003295203125736057,True
+proyeccion_videos,video::ndAZjHqzzT8,ndAZjHqzzT8,video,Internet: escoger el menos malo,4,4,284,285,1,10,7,-30.0,0.9991526620533823,0.9994821823659559,0.0003295203125736057,True
+proyeccion_videos,video::6W4u8sGEnGM,6W4u8sGEnGM,video,Inician los trabajos de recuperación del Puente Belice II.,2,2,284,285,1,10,8,-20.0,0.9991526620533823,0.9993409593748529,0.00018829732147063183,True
+proyeccion_videos,video::j43HgwYFKfk,j43HgwYFKfk,video,La cooptación de Walter Mazariegos en la USAC,3,3,284,285,1,10,8,-20.0,0.9991526620533823,0.9993409593748529,0.00018829732147063183,True
+proyeccion_autores,author::UC-hfX8J5JPJ-dfuakzegMLA,UC-hfX8J5JPJ-dfuakzegMLA,author,@normaleticiaorozcojuarez2418,127,127,10,10,0,276,275,-0.36231884057971014,0.30169367389911195,0.30169367389911195,0.0,False
+proyeccion_autores,author::UC-jS_kA9w-OmpupXDx156Rg,UC-jS_kA9w-OmpupXDx156Rg,author,@simoncreyesc7579,127,127,10,10,0,276,275,-0.36231884057971014,0.30169367389911195,0.30169367389911195,0.0,False
+proyeccion_autores,author::UC-pNP6RMFuLg_-x7Ah_0kEA,UC-pNP6RMFuLg_-x7Ah_0kEA,author,@almacatalan2717,127,127,10,10,0,276,275,-0.36231884057971014,0.30169367389911195,0.30169367389911195,0.0,False
+proyeccion_autores,author::UC1vr9aaMI2crB0NvwFHUeoQ,UC1vr9aaMI2crB0NvwFHUeoQ,author,@JoseSimilox-p6e,127,127,10,10,0,276,275,-0.36231884057971014,0.30169367389911195,0.30169367389911195,0.0,False
+proyeccion_autores,author::UC2Y_EHWQKevubk4vOEBBFxw,UC2Y_EHWQKevubk4vOEBBFxw,author,@alfonsomorales2653,127,127,10,10,0,276,275,-0.36231884057971014,0.30169367389911195,0.30169367389911195,0.0,False
+proyeccion_autores,author::UC2weSE8rpqkGMOp6StYtVfg,UC2weSE8rpqkGMOp6StYtVfg,author,@katerynsantiago2907,127,127,10,10,0,276,275,-0.36231884057971014,0.30169367389911195,0.30169367389911195,0.0,False
+proyeccion_autores,author::UCbrtvygfRT6QXqWDNrOf-cA,UCbrtvygfRT6QXqWDNrOf-cA,author,@Alejandro00710,23,23,10,10,0,276,275,-0.36231884057971014,0.30169367389911195,0.30169367389911195,0.0,False
+proyeccion_autores,author::UCylqlpsh8ENNM1LqgQ1KbxA,UCylqlpsh8ENNM1LqgQ1KbxA,author,@Jel.Awesh.M,174,174,10,10,0,276,275,-0.36231884057971014,0.30169367389911195,0.30169367389911195,0.0,False
+proyeccion_videos,video::06mFNPU0aB8,06mFNPU0aB8,video,Capturan a presuntos delincuentes disfrazados de mujer señalados de cometer asalto,1,1,284,284,0,10,9,-10.0,0.9991526620533823,0.9991526620533823,0.0,False
+proyeccion_videos,video::WIUZtitfLRw,WIUZtitfLRw,video,Caminar en una ciudad hecha para carros,2,2,284,284,0,10,9,-10.0,0.9991526620533823,0.9991526620533823,0.0,False
+proyeccion_videos,video::b_Hkrkl3adA,b_Hkrkl3adA,video,Bloqueos en Guatemala este 31 de agosto por alza en combustibles afectan rutas principales,1,1,284,284,0,10,9,-10.0,0.9991526620533823,0.9991526620533823,0.0,False
+proyeccion_videos,video::is3Mk5oC19g,is3Mk5oC19g,video,Capturan a ladrón que había quedado grabado mientras robaba en una parroquia de Retalhuleu,1,1,284,284,0,10,9,-10.0,0.9991526620533823,0.9991526620533823,0.0,False
+proyeccion_videos,video::yLZS3JiEBg8,yLZS3JiEBg8,video,Arroz con pollo a la MONOPOLIO,2,2,284,284,0,10,9,-10.0,0.9991526620533823,0.9991526620533823,0.0,False

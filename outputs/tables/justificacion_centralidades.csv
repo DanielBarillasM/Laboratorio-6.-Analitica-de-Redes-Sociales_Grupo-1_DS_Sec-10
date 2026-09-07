@@ -1,0 +1,7 @@
+﻿medida,atributo,interpreta,justificacion
+grado,sin peso,número de vecinos distintos,Mide alcance directo; en la proyección autor-autor cuenta con cuántos autores se coincidió al menos una vez.
+grado_ponderado,weight,intensidad acumulada de coparticipación,"El peso es un conteo de videos (autores) compartidos, por lo que sumarlo mide volumen de copresencia, no distancia."
+intermediacion,distance = 1/weight,posición de paso entre pares,"Identifica participantes puente. Requiere costos: una coparticipación fuerte debe ser un camino barato, de ahí el inverso del peso."
+armonica,distance = 1/weight,cercanía promedio tolerante a la desconexión,Se prefiere a la cercanía clásica porque la red tiene múltiples componentes y nodos aislados; la armónica suma 1/d y asigna cero a los pares inalcanzables.
+pagerank,weight,importancia por vecindad ponderada,"Complementa al grado al descontar la centralidad heredada de vecinos muy conectados; el peso actúa como probabilidad de transición, no como costo."
+vectores_propios,no calculada,-,"Se descarta: en un grafo con muchos componentes la centralidad de vectores propios se concentra en la componente dominante y asigna cero al resto, lo que la vuelve no comparable en esta red."

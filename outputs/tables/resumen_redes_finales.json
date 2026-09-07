@@ -1,0 +1,32 @@
+{
+  "semilla": 42,
+  "autores": {
+    "nodos": 332,
+    "aristas": 10732,
+    "recurrentes": 9,
+    "intermediacion_positiva": 9,
+    "puntos_articulacion": 7,
+    "puentes_estructurales": 7,
+    "puentes_redundantes": 2,
+    "aislados": 4
+  },
+  "videos": {
+    "nodos": 293,
+    "aristas": 11,
+    "conectados": 10,
+    "puntos_articulacion": 5,
+    "articuladores": 5,
+    "aislados": 283
+  },
+  "remocion": {
+    "nodos_evaluados": 25,
+    "con_fragmentacion": 12,
+    "maximo_incremento_fragmentacion": 0.23901858463792003
+  },
+  "comunidades": {
+    "algoritmo": "Louvain ponderado",
+    "total": 10,
+    "modularidad": 0.3949028012418394,
+    "dependientes_de_pocos_nodos": 6
+  }
+}
