@@ -1,2 +1,2 @@
 ﻿grupo,n_comentarios,negativos,neutrales,positivos,prob_negativo_media,prob_neutral_media,prob_positivo_media,confianza_media,baja_confianza_n,pct_negativo,pct_neutral,pct_positivo,sentimiento_dominante,muestra_interpretable,minimo_muestra
-general,406,249,75,82,0.5760995495348729,0.21200902560459717,0.21189142149538168,0.8184942230215213,61,61.330049261083744,18.472906403940886,20.19704433497537,negativo,True,5
+general,406,249,75,82,0.5760995784540445,0.21200898703270285,0.21189143178867534,0.8184942393173725,61,61.330049261083744,18.472906403940886,20.19704433497537,negativo,True,5
